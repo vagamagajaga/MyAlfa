@@ -13,10 +13,10 @@ final class Store {
     private let defaults = UserDefaults.standard
     private let key = "Meetings"
     
-    var meetings: [Day] {
+    var meetings: [CardOfDay] {
         get {
             guard let data = defaults.data(forKey: key),
-                  let days = try? JSONDecoder().decode([Day].self, from: data) else {
+                  let days = try? JSONDecoder().decode([CardOfDay].self, from: data) else {
                 return []
             }
             return days
@@ -34,7 +34,7 @@ final class Store {
         meetings.remove(at: indexPath.row)
     }
     
-    func addDay(day: Day) {
+    func addDay(day: CardOfDay) {
         meetings.append(day)
     }
 }

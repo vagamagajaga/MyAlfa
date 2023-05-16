@@ -10,12 +10,20 @@ import UIKit
 final class AddingVC: UIViewController {
     
     //MARK: - Properties
-    private var tableView = UITableView()
+    private var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(MyTableViewCell.self, forCellReuseIdentifier: MyTableViewCell.cellId)
+        tableView.allowsSelection = false
+        return tableView
+    }()
+    
     private var addButton = UIButton()
     private var textField = UITextField()
     private var datePicker = UIDatePicker()
+    private var sumLabel = UILabel()
     
     private var store = Store()
+    private var cardOfDay = CardOfDay(date: Date())
     
     private var addButtonBottomConstraint: NSLayoutConstraint!
     
@@ -27,7 +35,12 @@ final class AddingVC: UIViewController {
             return formatter
         }()
     
-    private var typeOfProducts = ["DC", "CC", "CC2", "CrossDC", "CrossCC", "BC", "MirPay", "RKO", "PIL", "CarLoan"]
+    private lazy var numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = " "
+        return formatter
+    }()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -38,7 +51,6 @@ final class AddingVC: UIViewController {
         addConstraints()
         
         textField.delegate = self
-        tableView.delegate = self
         tableView.dataSource = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
@@ -69,35 +81,13 @@ final class AddingVC: UIViewController {
     }
     
     @objc func addDay() {
-        guard let comment = textField.text,
-              !comment.isEmpty,
-              comment != " " else {
-            return
-        }
-        let rowDate = datePicker.date
-//        let date = dateFormatter.string(from: rowDate)
-        
-        store.addDay(day: Day(date: rowDate, comment: comment))
+        cardOfDay.date = datePicker.date
+        store.addDay(day: self.cardOfDay)
         navigationController?.popViewController(animated: true)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        if let text = textField.text,
-           !text.isEmpty,
-           text != " " {
-            addButton.backgroundColor = .systemBlue
-        }
-    }
-    
-    @objc private func textFieldIsEmpty(_ textField: UITextField) {
-        if let text = textField.text,
-           text.isEmpty || text == " " {
-            addButton.backgroundColor = .lightGray
-        }
-    }
-    
-    private func makeButtonActive() {
-        addButton.backgroundColor = .systemBlue
+        cardOfDay.comment = textField.text
     }
     
     private func dateToString(date: Date) -> String {
@@ -111,6 +101,7 @@ final class AddingVC: UIViewController {
         view.addSubview(datePicker)
         view.addSubview(addButton)
         view.addSubview(tableView)
+        view.addSubview(sumLabel)
     }
     
     private func prepareViews() {
@@ -121,16 +112,19 @@ final class AddingVC: UIViewController {
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        sumLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        sumLabel.text = numberFormatter.string(from: cardOfDay.summaryOfDay() as NSNumber)
+        sumLabel.textAlignment = .center
         
         textField.placeholder = "Доп. комментарии"
         textField.borderStyle = .roundedRect
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        textField.addTarget(self, action: #selector(textFieldIsEmpty(_:)), for: .editingChanged)
         
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
         
-        addButton.backgroundColor = .lightGray
+        addButton.backgroundColor = .systemBlue
         addButton.layer.cornerRadius = 10
         addButton.setTitle("Сохранить", for: .normal)
         addButton.isEnabled = true
@@ -147,16 +141,19 @@ final class AddingVC: UIViewController {
             datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             datePicker.heightAnchor.constraint(equalToConstant: 100),
             
+            sumLabel.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 20),
+            sumLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            sumLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            
+            textField.topAnchor.constraint(equalTo: sumLabel.bottomAnchor, constant: 20),
+            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            
             tableView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor),
-            
-            textField.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 20),
-            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
-            
+
             addButton.heightAnchor.constraint(equalToConstant: 30),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
@@ -175,26 +172,26 @@ extension AddingVC: UITextFieldDelegate {
 
 extension AddingVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        typeOfProducts.count
+        cardOfDay.arrayOfProducts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: reusedCell)
-        cell = UITableViewCell(style: .default, reuseIdentifier: reusedCell)
-        
-        guard let cell = cell else {
-            return UITableViewCell(style: .default, reuseIdentifier: reusedCell)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell else {
+            return UITableViewCell()
         }
-        
-        cell.textLabel?.text = typeOfProducts[indexPath.row]
-        cell.accessoryView
-        
+        cell.configure(product: cardOfDay.arrayOfProducts[indexPath.row])
+        cell.delegate = self
+    
         return cell
     }
 }
 
-extension AddingVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated:  true)
+extension AddingVC: MyTableViewCellDelegate {
+    func fillCardOfDay(product: CardOfDay.Product) {
+        let productIndex = cardOfDay.arrayOfProducts.firstIndex(where: { $0.name == product.name })
+        if let index = productIndex {
+            cardOfDay.arrayOfProducts[index] = product
+        }
+        sumLabel.text = String(cardOfDay.summaryOfDay())
     }
 }

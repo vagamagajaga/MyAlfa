@@ -14,6 +14,7 @@ final class MeetingVC: UIViewController {
     private var addButton = UIButton()
     private var filterButton  = UIButton()
     private var emptyTextLabel = UILabel()
+    private var reportOfDay = UITextView()
     
     private var store = Store()
     
@@ -23,6 +24,13 @@ final class MeetingVC: UIViewController {
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yy"
+        return formatter
+    }()
+    
+    private lazy var numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = " "
         return formatter
     }()
     
@@ -126,7 +134,7 @@ extension MeetingVC: UITableViewDataSource {
             return UITableViewCell(style: .default, reuseIdentifier: reusedCell)
         }
         
-        cell.textLabel?.text = String(store.meetings[indexPath.row].comment ?? "No data")
+        cell.textLabel?.text = numberFormatter.string(from: store.meetings[indexPath.row].summaryOfDay() as NSNumber)
         cell.detailTextLabel?.text = dateToString(date: store.meetings[indexPath.row].date) 
         cell.detailTextLabel?.textColor = .gray
         cell.accessoryType = .disclosureIndicator
@@ -137,11 +145,10 @@ extension MeetingVC: UITableViewDataSource {
 
 extension MeetingVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectedDay = indexPath.row
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = EditingVC()
-        vc.meetingViewController = self
+        vc.chosenCardOfDay = store.meetings[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
     
