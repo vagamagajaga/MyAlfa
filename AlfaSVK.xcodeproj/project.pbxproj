@@ -18,6 +18,7 @@
 		CC92DDC32A040318007ECEFA /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC22A040318007ECEFA /* Store.swift */; };
 		CC92DDC52A04070E007ECEFA /* EditingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC42A04070E007ECEFA /* EditingVC.swift */; };
 		CC92DDC72A09507E007ECEFA /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC62A09507E007ECEFA /* MyTableViewCell.swift */; };
+		CC9917312A139A6000F40837 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9917302A139A6000F40837 /* ReportVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		CC92DDC22A040318007ECEFA /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		CC92DDC42A04070E007ECEFA /* EditingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingVC.swift; sourceTree = "<group>"; };
 		CC92DDC62A09507E007ECEFA /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
+		CC9917302A139A6000F40837 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +86,8 @@
 				CC92DDBB2A03DE07007ECEFA /* MeetingVC.swift */,
 				CC92DDC42A04070E007ECEFA /* EditingVC.swift */,
 				CC92DDBD2A03F1DA007ECEFA /* AddingVC.swift */,
-				CC92DDC62A09507E007ECEFA /* MyTableViewCell.swift */,
+				CC9917302A139A6000F40837 /* ReportVC.swift */,
+				CC99172F2A139A3E00F40837 /* Cell */,
 			);
 			name = VViewPart;
 			sourceTree = "<group>";
@@ -96,6 +99,14 @@
 				CC92DDC22A040318007ECEFA /* Store.swift */,
 			);
 			name = MeetingService;
+			sourceTree = "<group>";
+		};
+		CC99172F2A139A3E00F40837 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CC92DDC62A09507E007ECEFA /* MyTableViewCell.swift */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,6 +185,7 @@
 				CC92DDBC2A03DE07007ECEFA /* MeetingVC.swift in Sources */,
 				CC92DDA92A03D61C007ECEFA /* SceneDelegate.swift in Sources */,
 				CC92DDC72A09507E007ECEFA /* MyTableViewCell.swift in Sources */,
+				CC9917312A139A6000F40837 /* ReportVC.swift in Sources */,
 				CC92DDC12A03F379007ECEFA /* MeetingDay.swift in Sources */,
 				CC92DDBE2A03F1DA007ECEFA /* AddingVC.swift in Sources */,
 				CC92DDC52A04070E007ECEFA /* EditingVC.swift in Sources */,

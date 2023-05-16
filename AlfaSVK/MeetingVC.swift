@@ -14,7 +14,6 @@ final class MeetingVC: UIViewController {
     private var addButton = UIButton()
     private var filterButton  = UIButton()
     private var emptyTextLabel = UILabel()
-    private var reportOfDay = UITextView()
     
     private var store = Store()
     
@@ -135,7 +134,7 @@ extension MeetingVC: UITableViewDataSource {
         }
         
         cell.textLabel?.text = numberFormatter.string(from: store.meetings[indexPath.row].summaryOfDay() as NSNumber)
-        cell.detailTextLabel?.text = dateToString(date: store.meetings[indexPath.row].date) 
+        cell.detailTextLabel?.text = dateToString(date: store.meetings[indexPath.row].date ?? Date()) 
         cell.detailTextLabel?.textColor = .gray
         cell.accessoryType = .disclosureIndicator
         

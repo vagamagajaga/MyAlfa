@@ -21,6 +21,7 @@ final class AddingVC: UIViewController {
     private var textField = UITextField()
     private var datePicker = UIDatePicker()
     private var sumLabel = UILabel()
+    private var reportButton = UIButton()
     
     private var store = Store()
     private var cardOfDay = CardOfDay(date: Date())
@@ -90,9 +91,20 @@ final class AddingVC: UIViewController {
         cardOfDay.comment = textField.text
     }
     
+    @objc private func moveToReport() {
+        let vc = ReportVC()
+        vc.cardOfDay = cardOfDay
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     private func dateToString(date: Date) -> String {
         let date = dateFormatter.string(from: date)
         return date
+    }
+    
+    private func returnSum() -> String {
+        let text = "Заработано: " + (numberFormatter.string(from: cardOfDay.summaryOfDay() as NSNumber) ?? "0")
+        return text
     }
     
     //MARK: - Configuration
@@ -102,10 +114,11 @@ final class AddingVC: UIViewController {
         view.addSubview(addButton)
         view.addSubview(tableView)
         view.addSubview(sumLabel)
+        view.addSubview(reportButton)
     }
     
     private func prepareViews() {
-        title = "Выдано продуктов"
+        title = "Карточка дня"
         view.backgroundColor = .white
         
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -113,10 +126,19 @@ final class AddingVC: UIViewController {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         sumLabel.translatesAutoresizingMaskIntoConstraints = false
+        reportButton.translatesAutoresizingMaskIntoConstraints = false
         
-        sumLabel.text = numberFormatter.string(from: cardOfDay.summaryOfDay() as NSNumber)
+        sumLabel.text = returnSum()
         sumLabel.textAlignment = .center
         
+        reportButton.backgroundColor = .systemBlue
+        reportButton.layer.cornerRadius = 10
+        reportButton.setTitle("Отчет", for: .normal)
+        reportButton.isEnabled = true
+        reportButton.titleLabel?.textColor = .white
+        reportButton.addTarget(self, action: #selector(moveToReport), for: .touchUpInside)
+        
+                
         textField.placeholder = "Доп. комментарии"
         textField.borderStyle = .roundedRect
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -142,8 +164,12 @@ final class AddingVC: UIViewController {
             datePicker.heightAnchor.constraint(equalToConstant: 100),
             
             sumLabel.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 20),
-            sumLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            sumLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            sumLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            reportButton.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 20),
+            reportButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            reportButton.heightAnchor.constraint(equalTo: sumLabel.heightAnchor),
+            reportButton.widthAnchor.constraint(equalToConstant: 75),
             
             textField.topAnchor.constraint(equalTo: sumLabel.bottomAnchor, constant: 20),
             textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
@@ -152,7 +178,7 @@ final class AddingVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: 20),
 
             addButton.heightAnchor.constraint(equalToConstant: 30),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
@@ -192,6 +218,6 @@ extension AddingVC: MyTableViewCellDelegate {
         if let index = productIndex {
             cardOfDay.arrayOfProducts[index] = product
         }
-        sumLabel.text = String(cardOfDay.summaryOfDay())
+        sumLabel.text = returnSum()
     }
 }

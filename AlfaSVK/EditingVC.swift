@@ -21,11 +21,11 @@ final class EditingVC: UIViewController {
     private var textField = UITextField()
     private var datePicker = UIDatePicker()
     private var sumLabel = UILabel()
+    private var reportButton = UIButton()
     
     private var store = Store()
-//    var meetingViewController = MeetingVC()
     
-    lazy var chosenCardOfDay = CardOfDay(date: Date())
+    lazy var chosenCardOfDay = CardOfDay()
     private var addButtonBottomConstraint: NSLayoutConstraint!
     
     private var reusedCell = "reusedCell"
@@ -42,6 +42,7 @@ final class EditingVC: UIViewController {
         formatter.groupingSeparator = " "
         return formatter
     }()
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +61,11 @@ final class EditingVC: UIViewController {
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: - Methods
     @objc private func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
@@ -75,7 +81,7 @@ final class EditingVC: UIViewController {
         view.layoutIfNeeded()
     }
     
-    @objc func addDay() {
+    @objc private func addDay() {
         chosenCardOfDay.date = datePicker.date
         store.addDay(day: self.chosenCardOfDay)
         navigationController?.popViewController(animated: true)
@@ -85,6 +91,17 @@ final class EditingVC: UIViewController {
         chosenCardOfDay.comment = textField.text
     }
     
+    @objc private func moveToReport() {
+        let vc = ReportVC()
+        vc.cardOfDay = chosenCardOfDay
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func returnSum() -> String {
+        let text = "Заработано: " + (numberFormatter.string(from: chosenCardOfDay.summaryOfDay() as NSNumber) ?? "0")
+        return text
+    }
+    
     //MARK: - Configuration
     private func addSubviews() {
         view.addSubview(textField)
@@ -92,6 +109,7 @@ final class EditingVC: UIViewController {
         view.addSubview(addButton)
         view.addSubview(tableView)
         view.addSubview(sumLabel)
+        view.addSubview(reportButton)
     }
     
     private func prepareViews() {
@@ -103,9 +121,17 @@ final class EditingVC: UIViewController {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         sumLabel.translatesAutoresizingMaskIntoConstraints = false
+        reportButton.translatesAutoresizingMaskIntoConstraints = false
         
-        sumLabel.text = numberFormatter.string(from: chosenCardOfDay.summaryOfDay() as NSNumber)
+        sumLabel.text = returnSum()
         sumLabel.textAlignment = .center
+        
+        reportButton.backgroundColor = .systemBlue
+        reportButton.layer.cornerRadius = 10
+        reportButton.setTitle("Отчет", for: .normal)
+        reportButton.isEnabled = true
+        reportButton.titleLabel?.textColor = .white
+        reportButton.addTarget(self, action: #selector(moveToReport), for: .touchUpInside)
         
         if let text = chosenCardOfDay.comment {
             textField.text = text
@@ -116,6 +142,7 @@ final class EditingVC: UIViewController {
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         datePicker.datePickerMode = .date
+        datePicker.date = chosenCardOfDay.date ?? Date()
         datePicker.preferredDatePickerStyle = .wheels
         
         addButton.backgroundColor = .systemBlue
@@ -136,17 +163,21 @@ final class EditingVC: UIViewController {
             datePicker.heightAnchor.constraint(equalToConstant: 100),
             
             sumLabel.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 20),
-            sumLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            sumLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            sumLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            reportButton.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 20),
+            reportButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            reportButton.heightAnchor.constraint(equalTo: sumLabel.heightAnchor),
+            reportButton.widthAnchor.constraint(equalToConstant: 75),
             
             textField.topAnchor.constraint(equalTo: sumLabel.bottomAnchor, constant: 20),
-            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             tableView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -20),
 
             addButton.heightAnchor.constraint(equalToConstant: 30),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
@@ -186,6 +217,6 @@ extension EditingVC: MyTableViewCellDelegate {
         if let index = productIndex {
             chosenCardOfDay.arrayOfProducts[index] = product
         }
-        sumLabel.text = String(chosenCardOfDay.summaryOfDay())
+        sumLabel.text = returnSum()
     }
 }
