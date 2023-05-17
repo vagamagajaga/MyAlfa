@@ -37,6 +37,8 @@ final class ReportVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+        
+        self.hideKeyboardWhenTappedAround()
     }
     
     deinit {
@@ -83,11 +85,13 @@ final class ReportVC: UIViewController {
         
         ZPC \(products[5].count)/всего
         
-        RKO \(products[7].count)/всего
+        RE \(products[12].count)/0
         
-        PIL \(products[8].count)/всего
+        RKO \(products[7].count)/0
         
-        Автокредит \(products[9].count)/всего
+        PIL \(products[8].count)/0
+        
+        Автокредит \(products[9].count)/0
         
         КРОССЫ
         
@@ -98,6 +102,7 @@ final class ReportVC: UIViewController {
         БС \(products[10].count)
         
         MirPay \(cardOfDay.sumOfCards())/андроиды/\(products[6].count)
+        Селфи \(cardOfDay.sumOfCards())/андроиды/\(products[11].count)
         """
         return text
     }
@@ -135,7 +140,7 @@ final class ReportVC: UIViewController {
         NSLayoutConstraint.activate([
             textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 180),
+            textView.topAnchor.constraint(equalTo: view.topAnchor, constant: 140),
             textView.bottomAnchor.constraint(equalTo: copyButton.topAnchor, constant: -20),
             
             copyButton.heightAnchor.constraint(equalToConstant: 30),
@@ -145,3 +150,17 @@ final class ReportVC: UIViewController {
         ])
     }
 }
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+//дописать селфи, перевыпуск, документы, чеки

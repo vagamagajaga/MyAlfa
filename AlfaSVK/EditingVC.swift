@@ -24,8 +24,8 @@ final class EditingVC: UIViewController {
     private var reportButton = UIButton()
     
     private var store = Store()
-    
     lazy var chosenCardOfDay = CardOfDay()
+    
     private var addButtonBottomConstraint: NSLayoutConstraint!
     
     private var reusedCell = "reusedCell"
@@ -138,6 +138,7 @@ final class EditingVC: UIViewController {
         } else {
             textField.placeholder = "Доп. комментарии"
         }
+        
         textField.borderStyle = .roundedRect
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
@@ -201,7 +202,7 @@ extension EditingVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyTableViewCell.cellId, for: indexPath) as? MyTableViewCell else {
             return UITableViewCell()
         }
         cell.configure(product: chosenCardOfDay.arrayOfProducts[indexPath.row])

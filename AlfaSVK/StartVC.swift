@@ -12,7 +12,7 @@ final class StartVC: UIViewController {
     //MARK: - Properties
     private var label = UIImageView()
     private var startButton = UIButton()
-
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +20,9 @@ final class StartVC: UIViewController {
         addSubviews()
         addConstraints()
         prepareSubviews()
-
+        
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -69,9 +69,7 @@ final class StartVC: UIViewController {
         startButton.backgroundColor = .systemRed
         startButton.titleLabel?.textColor = .white
         startButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        
     }
-    
     
 }
 

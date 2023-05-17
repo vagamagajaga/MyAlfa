@@ -10,15 +10,14 @@ import UIKit
 final class MeetingVC: UIViewController {
     
     //MARK: - Properties
+    private let reusedCell = "reusedCell"
+
     private var tableView = UITableView()
     private var addButton = UIButton()
     private var filterButton  = UIButton()
     private var emptyTextLabel = UILabel()
     
     private var store = Store()
-    
-    private let reusedCell = "reusedCell"
-    private var selectedDay = 0
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -47,8 +46,7 @@ final class MeetingVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        tableView.reloadData()
+        updateBooksByDate()
     }
     
     //MARK: - Methods
@@ -57,17 +55,11 @@ final class MeetingVC: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc private func filterButtonPressed() {
-        // TO WRITE
-    }
-    
-    private func isTableEmpty() {
-        
-    }
-    
-    private func dateToString(date: Date) -> String {
-        let date = dateFormatter.string(from: date)
-        return date
+    private func updateBooksByDate() {
+        if store.meetings.count > 1 {
+            store.meetings.sort { $0.date! < $1.date! }
+        }
+        tableView.reloadData()
     }
     
     //MARK: - Configuration
@@ -88,6 +80,11 @@ final class MeetingVC: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+    
+    private func dateToString(date: Date) -> String {
+        let date = dateFormatter.string(from: date)
+        return date
     }
     
     private func prepareSubviews() {
@@ -116,9 +113,9 @@ final class MeetingVC: UIViewController {
         
         filterButton.setImage(UIImage(systemName: "arrow.up.and.down.text.horizontal"), for: .normal)
         filterButton.tintColor = .systemRed
-        filterButton.addTarget(self, action: #selector(filterButtonPressed), for: .touchUpInside)
     }
 }
+
 //MARK: - Extensions
 extension MeetingVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -153,11 +150,10 @@ extension MeetingVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let swipeRead = UIContextualAction(style: .normal, title: "Удалить") { [weak self] action, view, success in
-            guard let self = self else { return }
+            guard let self else { return }
             tableView.performBatchUpdates {
                 self.store.removeDay(indexPath: indexPath)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                self.isTableEmpty()
             }
         }
         

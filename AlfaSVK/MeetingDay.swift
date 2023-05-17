@@ -8,7 +8,7 @@
 import Foundation
 
 struct CardOfDay: Codable {
-    var date: Date? 
+    var date: Date?
     var comment: String?
     var arrayOfProducts: [Product] = [
     Product(name: "DC", count: 0, price: 250),
@@ -20,8 +20,10 @@ struct CardOfDay: Codable {
     Product(name: "MirPay", count: 0, price: 100),
     Product(name: "RKO", count: 0, price: 380),
     Product(name: "PIL", count: 0, price: 380),
-    Product(name: "AutoLoan", count: 0, price: 380),
-    Product(name: "BC", count: 0, price: 600)
+    Product(name: "CarLoan", count: 0, price: 380),
+    Product(name: "BC", count: 0, price: 600),
+    Product(name: "Селфи", count: 0, price: 300),
+    Product(name: "RE", count: 0, price: 250)
     ]
     
     func summaryOfDay() -> Int {
@@ -37,6 +39,7 @@ struct CardOfDay: Codable {
         for i in 0...5 {
             countOFCards += arrayOfProducts[i].count
         }
+        countOFCards += (arrayOfProducts[10].count + arrayOfProducts[11].count)
         return countOFCards
     }
 }

@@ -23,13 +23,17 @@ final class MyTableViewCell: UITableViewCell {
     
     static let cellId = "MyTableViewCell"
     
-    //MARK: - Lifecycle
+    //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
                         
         addSubview()
         prepareView()
         addConstraint()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Configuration
@@ -74,9 +78,5 @@ final class MyTableViewCell: UITableViewCell {
         nameLabel.text = product.name
         numberLabel.text = String(product.count)
         self.product = product
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

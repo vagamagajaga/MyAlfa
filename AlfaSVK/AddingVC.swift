@@ -81,7 +81,7 @@ final class AddingVC: UIViewController {
         view.layoutIfNeeded()
     }
     
-    @objc func addDay() {
+    @objc private func addDay() {
         cardOfDay.date = datePicker.date
         store.addDay(day: self.cardOfDay)
         navigationController?.popViewController(animated: true)
@@ -178,7 +178,7 @@ final class AddingVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: 20),
+            tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -20),
 
             addButton.heightAnchor.constraint(equalToConstant: 30),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
