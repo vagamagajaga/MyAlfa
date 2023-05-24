@@ -77,6 +77,7 @@ final class MyTableViewCell: UITableViewCell {
     func configure(product: CardOfDay.Product) {
         nameLabel.text = product.name
         numberLabel.text = String(product.count)
+        counterView.value = Double(product.count)
         self.product = product
     }
 }

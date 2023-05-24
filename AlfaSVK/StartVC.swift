@@ -70,6 +70,4 @@ final class StartVC: UIViewController {
         startButton.titleLabel?.textColor = .white
         startButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
-    
 }
-

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AddingVC: UIViewController {
+final class CardOfDayVC: UIViewController {
     
     //MARK: - Properties
     private var tableView: UITableView = {
@@ -18,17 +18,19 @@ final class AddingVC: UIViewController {
     }()
     
     private var addButton = UIButton()
-    private var textField = UITextField()
     private var datePicker = UIDatePicker()
     private var sumLabel = UILabel()
     private var reportButton = UIButton()
+    private var areaField = UITextField()
     
     private var store = Store()
-    private var cardOfDay = CardOfDay(date: Date())
+    lazy var cardOfDay = CardOfDay(date: Date())
     
     private var addButtonBottomConstraint: NSLayoutConstraint!
     
     private var reusedCell = "reusedCell"
+    private var doWeChooseCard: Bool = false
+    private var numberOfDay: Int = 0
     
     private lazy var dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -44,6 +46,17 @@ final class AddingVC: UIViewController {
     }()
     
     //MARK: - Lifecycle
+    init(numberOfDay: Int = 0, doWeChooseCard: Bool = false) {
+        self.numberOfDay = numberOfDay
+        self.doWeChooseCard = doWeChooseCard
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -51,7 +64,7 @@ final class AddingVC: UIViewController {
         prepareViews()
         addConstraints()
         
-        textField.delegate = self
+        areaField.delegate = self
         tableView.dataSource = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
@@ -83,7 +96,7 @@ final class AddingVC: UIViewController {
     
     @objc private func addDay() {
         cardOfDay.date = datePicker.date
-        store.addDay(day: self.cardOfDay)
+        doWeChooseCard ? store.meetings[numberOfDay] = cardOfDay : store.addDay(day: self.cardOfDay)
         navigationController?.popViewController(animated: true)
     }
     
@@ -93,13 +106,9 @@ final class AddingVC: UIViewController {
     
     @objc private func moveToReport() {
         let vc = ReportVC()
+        cardOfDay.date = datePicker.date
         vc.cardOfDay = cardOfDay
         navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    private func dateToString(date: Date) -> String {
-        let date = dateFormatter.string(from: date)
-        return date
     }
     
     private func returnSum() -> String {
@@ -109,24 +118,24 @@ final class AddingVC: UIViewController {
     
     //MARK: - Configuration
     private func addSubviews() {
-        view.addSubview(textField)
         view.addSubview(datePicker)
         view.addSubview(addButton)
         view.addSubview(tableView)
         view.addSubview(sumLabel)
         view.addSubview(reportButton)
+        view.addSubview(areaField)
     }
     
     private func prepareViews() {
         title = "Карточка дня"
         view.backgroundColor = .white
         
-        textField.translatesAutoresizingMaskIntoConstraints = false
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         sumLabel.translatesAutoresizingMaskIntoConstraints = false
         reportButton.translatesAutoresizingMaskIntoConstraints = false
+        areaField.translatesAutoresizingMaskIntoConstraints = false
         
         sumLabel.text = returnSum()
         sumLabel.textAlignment = .center
@@ -138,17 +147,19 @@ final class AddingVC: UIViewController {
         reportButton.titleLabel?.textColor = .white
         reportButton.addTarget(self, action: #selector(moveToReport), for: .touchUpInside)
         
-                
-        textField.placeholder = "Доп. комментарии"
-        textField.borderStyle = .roundedRect
-        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        if let text = cardOfDay.comment {
+            areaField.text = text
+        } else {
+            areaField.placeholder = "Укажи район"
+        }
         
+        datePicker.date = cardOfDay.date
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
         
         addButton.backgroundColor = .systemBlue
         addButton.layer.cornerRadius = 10
-        addButton.setTitle("Сохранить", for: .normal)
+        addButton.setTitle(doWeChooseCard ? "Изменить" : "Сохранить", for: .normal)
         addButton.isEnabled = true
         addButton.titleLabel?.textColor = .white
         addButton.addTarget(self, action: #selector(addDay), for: .touchUpInside)
@@ -171,11 +182,11 @@ final class AddingVC: UIViewController {
             reportButton.heightAnchor.constraint(equalTo: sumLabel.heightAnchor),
             reportButton.widthAnchor.constraint(equalToConstant: 75),
             
-            textField.topAnchor.constraint(equalTo: sumLabel.bottomAnchor, constant: 20),
-            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            areaField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            areaField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            areaField.topAnchor.constraint(equalTo: sumLabel.bottomAnchor, constant: 20),
             
-            tableView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: areaField.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -20),
@@ -189,14 +200,7 @@ final class AddingVC: UIViewController {
 }
     
 //MARK: - Extensions
-extension AddingVC: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}
-
-extension AddingVC: UITableViewDataSource {
+extension CardOfDayVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         cardOfDay.arrayOfProducts.count
     }
@@ -212,12 +216,18 @@ extension AddingVC: UITableViewDataSource {
     }
 }
 
-extension AddingVC: MyTableViewCellDelegate {
+extension CardOfDayVC: MyTableViewCellDelegate {
     func fillCardOfDay(product: CardOfDay.Product) {
         let productIndex = cardOfDay.arrayOfProducts.firstIndex(where: { $0.name == product.name })
         if let index = productIndex {
             cardOfDay.arrayOfProducts[index] = product
         }
         sumLabel.text = returnSum()
+    }
+}
+
+extension CardOfDayVC: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        cardOfDay.comment = textField.text
     }
 }

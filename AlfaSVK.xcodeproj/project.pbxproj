@@ -13,10 +13,9 @@
 		CC92DDB02A03D61E007ECEFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC92DDAF2A03D61E007ECEFA /* Assets.xcassets */; };
 		CC92DDB32A03D61E007ECEFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC92DDB12A03D61E007ECEFA /* LaunchScreen.storyboard */; };
 		CC92DDBC2A03DE07007ECEFA /* MeetingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDBB2A03DE07007ECEFA /* MeetingVC.swift */; };
-		CC92DDBE2A03F1DA007ECEFA /* AddingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDBD2A03F1DA007ECEFA /* AddingVC.swift */; };
+		CC92DDBE2A03F1DA007ECEFA /* CardOfDayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDBD2A03F1DA007ECEFA /* CardOfDayVC.swift */; };
 		CC92DDC12A03F379007ECEFA /* MeetingDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC02A03F379007ECEFA /* MeetingDay.swift */; };
 		CC92DDC32A040318007ECEFA /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC22A040318007ECEFA /* Store.swift */; };
-		CC92DDC52A04070E007ECEFA /* EditingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC42A04070E007ECEFA /* EditingVC.swift */; };
 		CC92DDC72A09507E007ECEFA /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC62A09507E007ECEFA /* MyTableViewCell.swift */; };
 		CC9917312A139A6000F40837 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9917302A139A6000F40837 /* ReportVC.swift */; };
 /* End PBXBuildFile section */
@@ -30,10 +29,9 @@
 		CC92DDB22A03D61E007ECEFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC92DDB42A03D61E007ECEFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC92DDBB2A03DE07007ECEFA /* MeetingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingVC.swift; sourceTree = "<group>"; };
-		CC92DDBD2A03F1DA007ECEFA /* AddingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingVC.swift; sourceTree = "<group>"; };
+		CC92DDBD2A03F1DA007ECEFA /* CardOfDayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardOfDayVC.swift; sourceTree = "<group>"; };
 		CC92DDC02A03F379007ECEFA /* MeetingDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDay.swift; sourceTree = "<group>"; };
 		CC92DDC22A040318007ECEFA /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		CC92DDC42A04070E007ECEFA /* EditingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingVC.swift; sourceTree = "<group>"; };
 		CC92DDC62A09507E007ECEFA /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		CC9917302A139A6000F40837 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,8 +82,7 @@
 			children = (
 				CC92DDAA2A03D61C007ECEFA /* StartVC.swift */,
 				CC92DDBB2A03DE07007ECEFA /* MeetingVC.swift */,
-				CC92DDC42A04070E007ECEFA /* EditingVC.swift */,
-				CC92DDBD2A03F1DA007ECEFA /* AddingVC.swift */,
+				CC92DDBD2A03F1DA007ECEFA /* CardOfDayVC.swift */,
 				CC9917302A139A6000F40837 /* ReportVC.swift */,
 				CC99172F2A139A3E00F40837 /* Cell */,
 			);
@@ -187,8 +184,7 @@
 				CC92DDC72A09507E007ECEFA /* MyTableViewCell.swift in Sources */,
 				CC9917312A139A6000F40837 /* ReportVC.swift in Sources */,
 				CC92DDC12A03F379007ECEFA /* MeetingDay.swift in Sources */,
-				CC92DDBE2A03F1DA007ECEFA /* AddingVC.swift in Sources */,
-				CC92DDC52A04070E007ECEFA /* EditingVC.swift in Sources */,
+				CC92DDBE2A03F1DA007ECEFA /* CardOfDayVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,10 +326,13 @@
 				DEVELOPMENT_TEAM = 4UV56Y9L23;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AlfaSVK/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -342,9 +341,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = vagamagajaga.AlfaSVK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -358,10 +360,13 @@
 				DEVELOPMENT_TEAM = 4UV56Y9L23;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AlfaSVK/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -370,9 +375,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = vagamagajaga.AlfaSVK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

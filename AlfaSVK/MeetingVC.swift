@@ -14,7 +14,6 @@ final class MeetingVC: UIViewController {
 
     private var tableView = UITableView()
     private var addButton = UIButton()
-    private var filterButton  = UIButton()
     private var emptyTextLabel = UILabel()
     
     private var store = Store()
@@ -51,13 +50,13 @@ final class MeetingVC: UIViewController {
     
     //MARK: - Methods
     @objc private func addButtonPressed() {
-        let vc = AddingVC()
+        let vc = CardOfDayVC()
         navigationController?.pushViewController(vc, animated: true)
     }
     
     private func updateBooksByDate() {
         if store.meetings.count > 1 {
-            store.meetings.sort { $0.date! < $1.date! }
+            store.meetings.sort { $0.date < $1.date }
         }
         tableView.reloadData()
     }
@@ -67,7 +66,6 @@ final class MeetingVC: UIViewController {
         view.addSubview(tableView)
         tableView.addSubview(emptyTextLabel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: filterButton)
     }
     
     private func addConstraints() {
@@ -88,8 +86,6 @@ final class MeetingVC: UIViewController {
     }
     
     private func prepareSubviews() {
-        view.backgroundColor = .white
-        
         title = "Рабочие дни"
         
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -100,7 +96,6 @@ final class MeetingVC: UIViewController {
         emptyTextLabel.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        filterButton.translatesAutoresizingMaskIntoConstraints = false
         
         emptyTextLabel.text = "Список пуст"
         emptyTextLabel.font = .boldSystemFont(ofSize: 24)
@@ -108,11 +103,8 @@ final class MeetingVC: UIViewController {
         emptyTextLabel.isHidden = true
         
         addButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        addButton.tintColor = .systemRed
+        addButton.tintColor = .systemBlue
         addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
-        
-        filterButton.setImage(UIImage(systemName: "arrow.up.and.down.text.horizontal"), for: .normal)
-        filterButton.tintColor = .systemRed
     }
 }
 
@@ -131,7 +123,7 @@ extension MeetingVC: UITableViewDataSource {
         }
         
         cell.textLabel?.text = numberFormatter.string(from: store.meetings[indexPath.row].summaryOfDay() as NSNumber)
-        cell.detailTextLabel?.text = dateToString(date: store.meetings[indexPath.row].date ?? Date()) 
+        cell.detailTextLabel?.text = dateToString(date: store.meetings[indexPath.row].date) + " " + (store.meetings[indexPath.row].comment ?? "") 
         cell.detailTextLabel?.textColor = .gray
         cell.accessoryType = .disclosureIndicator
         
@@ -143,8 +135,8 @@ extension MeetingVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let vc = EditingVC()
-        vc.chosenCardOfDay = store.meetings[indexPath.row]
+        let vc = CardOfDayVC(numberOfDay: indexPath.row, doWeChooseCard: true)
+        vc.cardOfDay = store.meetings[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
     
