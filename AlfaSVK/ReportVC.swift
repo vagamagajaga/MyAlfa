@@ -126,29 +126,32 @@ final class ReportVC: UIViewController {
     }
     
     private func prepareView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
                 
         textView.translatesAutoresizingMaskIntoConstraints = false
         copyButton.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         titleLabel.text = "Отчет"
+        titleLabel.textColor = .label
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
         textView.text = returnReportText()
+        textView.backgroundColor = .systemBackground
+        textView.layer.borderColor = UIColor.label.cgColor
         textView.sizeToFit()
         textView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0)
         textView.font = .boldSystemFont(ofSize: 16)
         textView.layer.cornerRadius = 10
-        textView.backgroundColor = .white
         textView.layer.borderWidth = 0.2
         
         copyButton.setTitle("Cкопировать отчет", for: .normal)
         copyButton.backgroundColor = .systemBlue
         copyButton.layer.cornerRadius = 10
-        copyButton.titleLabel?.textColor = .white
         copyButton.isEnabled = true
         copyButton.addTarget(self, action: #selector(copyText), for: .touchUpInside)
+        copyButton.backgroundColor = .systemBlue
+        copyButton.titleLabel?.textColor = .label
     }
     
     private func addConstraints() {

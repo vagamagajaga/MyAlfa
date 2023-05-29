@@ -128,7 +128,7 @@ final class CardOfDayVC: UIViewController {
     
     private func prepareViews() {
         title = "Карточка дня"
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
