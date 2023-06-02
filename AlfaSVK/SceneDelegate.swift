@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             let window = UIWindow(windowScene: windowScene)
             let navController = UINavigationController()
-            let viewController = StartVC()
+            let viewController = ModuleBuilder.createStartVC()
             
             navController.viewControllers = [viewController]
             window.rootViewController = navController
@@ -26,4 +26,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 }
-

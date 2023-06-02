@@ -33,7 +33,7 @@ final class StartVC: UIViewController {
     
     //MARK: - Methods
     @objc private func buttonPressed() {
-        let vc = MeetingVC()
+        let vc = ModuleBuilder.createMeetingVC()
         navigationController?.pushViewController(vc, animated: true)
     }
     

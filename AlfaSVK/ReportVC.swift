@@ -2,27 +2,27 @@
 //  ReportVC.swift
 //  AlfaSVK
 //
-//  Created by Vagan Galstian on 16.05.2023.
+//  Created by Vagan Galstian on 02.06.2023.
 //
 
 import UIKit
 
-final class ReportVC: UIViewController {
+protocol ReportVCProtocol: AnyObject {
+    //что стоит сюда вписать?
+}
+
+final class ReportVC: UIViewController, ReportVCProtocol {
     
     //MARK: - Property
     private var textView = UITextView()
     private var copyButton = UIButton()
     private var titleLabel = UILabel()
     
-    var cardOfDay = CardOfDay(date: Date())
+    var cardOfDay = CardOfDay(date: Date()) //стоит ли оставлять здесь это свойство или правильно перенести в презентер?
+    //ответил в других косяках
+    var presenter: ReportPresenterProtocol!
     
     private var copyButtonConstraint: NSLayoutConstraint!
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yy"
-        return formatter
-    }()
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -67,57 +67,6 @@ final class ReportVC: UIViewController {
         dismissKeyboard()
     }
     
-    private func dateToString(date: Date) -> String {
-        let date = dateFormatter.string(from: date)
-        return date
-    }
-    
-    private func checkForIndex(product: [CardOfDay.Product], index: Int) -> Int {
-        if product.indices.contains(index) {
-            return product[index].count
-        }
-        return 0
-    }
-    
-    private func returnReportText() -> String {
-        let products = cardOfDay.arrayOfProducts
-        let date = dateToString(date: cardOfDay.date)
-        
-        let text = """
-        Отчет за \(date)
-        Район: \(cardOfDay.comment ?? "Не указан")
-        
-        DC \(products[0].count)/всего
-        
-        СС \(products[1].count)/всего
-        
-        СС2 \(products[2].count)/всего
-        
-        ZPC \(products[5].count)/всего
-        
-        RE \(checkForIndex(product: products, index: 12))/0
-        
-        RKO \(products[7].count)/0
-        
-        PIL \(products[8].count)/0
-        
-        Автокредит \(products[9].count)/0
-        
-        КРОССЫ
-        
-        ДК \(products[3].count)
-        КК \(products[0].count + products[5].count)/одобрено/\(products[4].count)
-        
-        НС
-        БС \(products[10].count)
-        
-        MirPay \(cardOfDay.sumOfCards())/андроиды/\(products[6].count)
-        Селфи \(checkForIndex(product: products, index: 11))
-        """
-        
-        return text
-    }
-    
     //MARK: - Configuration
     private func addSubviews() {
         view.addSubview(textView)
@@ -136,7 +85,7 @@ final class ReportVC: UIViewController {
         titleLabel.textColor = .label
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
-        textView.text = returnReportText()
+        textView.text = presenter.returnReportText(cardOfDay: cardOfDay)
         textView.backgroundColor = .systemBackground
         textView.layer.borderColor = UIColor.label.cgColor
         textView.sizeToFit()
@@ -186,3 +135,4 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
+

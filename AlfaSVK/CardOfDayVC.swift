@@ -1,13 +1,17 @@
 //
-//  AddingVC.swift
+//  CardOfDayVC.swift
 //  AlfaSVK
 //
-//  Created by Vagan Galstian on 04.05.2023.
+//  Created by Vagan Galstian on 02.06.2023.
 //
 
 import UIKit
 
-final class CardOfDayVC: UIViewController {
+protocol CardOfDayVCProtocol: AnyObject {
+    var cardOfDay: CardOfDay { get set }
+}
+
+final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
     
     //MARK: - Properties
     private var tableView: UITableView = {
@@ -23,29 +27,19 @@ final class CardOfDayVC: UIViewController {
     private var reportButton = UIButton()
     private var areaField = UITextField()
     
-    private var store = Store()
-    lazy var cardOfDay = CardOfDay(date: Date())
+    var presenter: CardOfDayPresenterProtocol!
+    //kosyak Это не похоже на юай а мохоже на модель, значит этому тут не место
+    lazy var cardOfDay: CardOfDay = CardOfDay(date: Date())
     
     private var addButtonBottomConstraint: NSLayoutConstraint!
     
     private var reusedCell = "reusedCell"
+    //kosyak и этому тут не место
     private var doWeChooseCard: Bool = false
     private var numberOfDay: Int = 0
     
-    private lazy var dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd.MM.yy"
-            return formatter
-        }()
-    
-    private lazy var numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = " "
-        return formatter
-    }()
-    
     //MARK: - Lifecycle
+    //kosyak да и эти данные должен презентер передавать сюда
     init(numberOfDay: Int = 0, doWeChooseCard: Bool = false) {
         self.numberOfDay = numberOfDay
         self.doWeChooseCard = doWeChooseCard
@@ -59,7 +53,7 @@ final class CardOfDayVC: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        //kosyak вообще запуск контроллера как правило начинается с обращения в презентер, оттуда ты можешь получить свои нужны инит данные для 42-43 строчки
         addSubviews()
         prepareViews()
         addConstraints()
@@ -96,7 +90,7 @@ final class CardOfDayVC: UIViewController {
     
     @objc private func addDay() {
         cardOfDay.date = datePicker.date
-        doWeChooseCard ? store.meetings[numberOfDay] = cardOfDay : store.addDay(day: self.cardOfDay)
+        doWeChooseCard ? presenter.store.meetings[numberOfDay] = cardOfDay : presenter.store.addDay(day: self.cardOfDay)
         navigationController?.popViewController(animated: true)
     }
     
@@ -105,15 +99,9 @@ final class CardOfDayVC: UIViewController {
     }
     
     @objc private func moveToReport() {
-        let vc = ReportVC()
         cardOfDay.date = datePicker.date
-        vc.cardOfDay = cardOfDay
+        let vc = ModuleBuilder.createReportVC(carDofDay: cardOfDay)
         navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    private func returnSum() -> String {
-        let text = "Заработано: " + (numberFormatter.string(from: cardOfDay.summaryOfDay() as NSNumber) ?? "0")
-        return text
     }
     
     //MARK: - Configuration
@@ -137,7 +125,7 @@ final class CardOfDayVC: UIViewController {
         reportButton.translatesAutoresizingMaskIntoConstraints = false
         areaField.translatesAutoresizingMaskIntoConstraints = false
         
-        sumLabel.text = returnSum()
+        sumLabel.text = presenter.returnSum(cardOfDay: cardOfDay)
         sumLabel.textAlignment = .center
         
         reportButton.backgroundColor = .systemBlue
@@ -222,7 +210,9 @@ extension CardOfDayVC: MyTableViewCellDelegate {
         if let index = productIndex {
             cardOfDay.arrayOfProducts[index] = product
         }
-        sumLabel.text = returnSum()
+        
+        //kosyak Вот тут более менее вызываешь правильно, но кард оф дей должен в презентере храниться
+        sumLabel.text = presenter.returnSum(cardOfDay: cardOfDay)
     }
 }
 

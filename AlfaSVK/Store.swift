@@ -7,7 +7,13 @@
 
 import Foundation
 
-final class Store {
+protocol StoreProtocol {
+    var meetings: [CardOfDay] { get set }
+    func removeDay(indexPath: IndexPath)
+    func addDay(day: CardOfDay)
+}
+
+final class Store: StoreProtocol {
     
     //MARK: - Properties
     private let defaults = UserDefaults.standard
