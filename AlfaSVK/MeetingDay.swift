@@ -53,4 +53,3 @@ extension CardOfDay {
         var price: Int
     }
 }
-

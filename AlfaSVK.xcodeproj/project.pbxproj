@@ -18,6 +18,7 @@
 		CC92DDC32A040318007ECEFA /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC22A040318007ECEFA /* Store.swift */; };
 		CC92DDC72A09507E007ECEFA /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC62A09507E007ECEFA /* MyTableViewCell.swift */; };
 		CC9917312A139A6000F40837 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9917302A139A6000F40837 /* ReportVC.swift */; };
+		CCC9F1992A247D2200BF8A22 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC9F1982A247D2200BF8A22 /* ModuleBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		CC92DDC22A040318007ECEFA /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		CC92DDC62A09507E007ECEFA /* MyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		CC9917302A139A6000F40837 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
+		CCC9F1982A247D2200BF8A22 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			children = (
 				CC92DDA62A03D61C007ECEFA /* AppDelegate.swift */,
 				CC92DDA82A03D61C007ECEFA /* SceneDelegate.swift */,
+				CCC9F1982A247D2200BF8A22 /* ModuleBuilder.swift */,
 				CC92DDBF2A03F311007ECEFA /* MeetingService */,
 				CC92DDBA2A03D914007ECEFA /* VViewPart */,
 				CC92DDB12A03D61E007ECEFA /* LaunchScreen.storyboard */,
@@ -179,6 +182,7 @@
 				CC92DDC32A040318007ECEFA /* Store.swift in Sources */,
 				CC92DDAB2A03D61C007ECEFA /* StartVC.swift in Sources */,
 				CC92DDA72A03D61C007ECEFA /* AppDelegate.swift in Sources */,
+				CCC9F1992A247D2200BF8A22 /* ModuleBuilder.swift in Sources */,
 				CC92DDBC2A03DE07007ECEFA /* MeetingVC.swift in Sources */,
 				CC92DDA92A03D61C007ECEFA /* SceneDelegate.swift in Sources */,
 				CC92DDC72A09507E007ECEFA /* MyTableViewCell.swift in Sources */,

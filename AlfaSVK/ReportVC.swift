@@ -106,7 +106,7 @@ final class ReportVC: UIViewController {
         КРОССЫ
         
         ДК \(products[3].count)
-        КК \(products[0].count)/одобрено/\(products[4].count)
+        КК \(products[0].count + products[5].count)/одобрено/\(products[4].count)
         
         НС
         БС \(products[10].count)
