@@ -34,6 +34,7 @@ final class MyTableViewCell: UITableViewCell {
         addConstraint()
     }
     
+    //MARK: - ШТше
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -83,4 +84,3 @@ final class MyTableViewCell: UITableViewCell {
         self.product = product
     }
 }
-

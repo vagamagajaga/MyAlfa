@@ -9,29 +9,36 @@ import Foundation
 
 protocol ReportPresenterProtocol: AnyObject {
     var store: StoreProtocol { get set }
-    init(view: ReportVCProtocol, store: StoreProtocol)
+    var cardOfDay: CardOfDay { get set }
+    init(view: ReportVCProtocol, store: StoreProtocol, cardOfDay: CardOfDay, router: RouterProtocol)
     func returnReportText(cardOfDay: CardOfDay) -> String
     func checkForIndex(product: [CardOfDay.Product], index: Int) -> Int
 }
 
 final class ReportPresenter: ReportPresenterProtocol {
     
+    //MARK: - Properties
     weak var view: ReportVCProtocol!
     var store: StoreProtocol
+    var cardOfDay: CardOfDay
+    var router: RouterProtocol
     
-    required init(view: ReportVCProtocol, store: StoreProtocol) {
+    //MARK: - Init
+    required init(view: ReportVCProtocol, store: StoreProtocol, cardOfDay: CardOfDay, router: RouterProtocol) {
         self.view = view
         self.store = store
+        self.cardOfDay = cardOfDay
+        self.router = router
     }
     
-    //kosyak тут правильно
+    //MARK: - Methods
     func checkForIndex(product: [CardOfDay.Product], index: Int) -> Int {
         if product.indices.contains(index) {
             return product[index].count
         }
         return 0
     }
-    //kosyak тут правильно
+
     func returnReportText(cardOfDay: CardOfDay) -> String {
         let products = cardOfDay.arrayOfProducts
         let date = cardOfDay.date.dateToString()
@@ -69,10 +76,5 @@ final class ReportPresenter: ReportPresenterProtocol {
             """
         
         return text
-        
     }
-    
-    
 }
-
-    //что стоит предать в задачи презентеру?

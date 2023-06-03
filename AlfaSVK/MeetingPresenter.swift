@@ -8,27 +8,45 @@
 import Foundation
 
 protocol MeetingPresenterProtocol: AnyObject {
-    var store: StoreProtocol { get set } //kosyak удали set и проверь изменится ли что то? Если нет, наверное он не нужен. Инкапсуляция типо
-    init(view: MeetingVCProtocol, store: StoreProtocol)
+    var store: StoreProtocol { get }
+    init(view: MeetingVCProtocol, store: StoreProtocol, router: RouterProtocol)
     func updateBooksByDate()
+    func removeDayFromStore(indexPath: IndexPath)
+    func addNewDay(numberOfDay: Int, doWeChooseCard: Bool)
+    func chooseDayFromList(cardOfDay: CardOfDay, numberOfDay: Int, doWeChooseCard: Bool)
 }
 
 final class MeetingPresenter: MeetingPresenterProtocol {
     
+    //MARK: - Properties
     weak var view: MeetingVCProtocol!
     var store: StoreProtocol
+    var router: RouterProtocol
     
-    required init(view: MeetingVCProtocol, store: StoreProtocol) {
+    //MARK: - Init
+    required init(view: MeetingVCProtocol, store: StoreProtocol, router: RouterProtocol) {
         self.view = view
         self.store = store
+        self.router = router
     }
     
+    //MARK: - Methods
     func updateBooksByDate() {
         if store.meetings.count > 1 {
             store.meetings.sort { $0.date < $1.date }
         }
-        //kosyak
-        //Презентер не должен обращаться к каким то вещам в вьюхе, презентер должен сказать вызмать метод контроллера -> view.updateData() -> и там вызываться reloadData()
-        view.tableView.reloadData()
+        view.updateData()
+    }
+    
+    func removeDayFromStore(indexPath: IndexPath) {
+        store.removeDay(indexPath: indexPath)
+    }
+    
+    func addNewDay(numberOfDay: Int, doWeChooseCard: Bool) {
+        router.showChosenOrNewDay(cardOfDay: CardOfDay(date: Date()), numberOfDay: numberOfDay, doWeChooseCard: doWeChooseCard)
+    }
+    
+    func chooseDayFromList(cardOfDay: CardOfDay, numberOfDay: Int, doWeChooseCard: Bool) {
+        router.showChosenOrNewDay(cardOfDay: cardOfDay, numberOfDay: numberOfDay, doWeChooseCard: doWeChooseCard)
     }
 }

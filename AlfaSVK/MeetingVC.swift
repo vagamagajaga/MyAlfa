@@ -8,10 +8,7 @@
 import UIKit
 
 protocol MeetingVCProtocol: AnyObject {
-    var tableView: UITableView { get set }
-    //но какие функции сюда реально стоит добавить, ведь основные задачи выполняет таблица и ее делегаты?
-    //kosyak Вот сюда добавить метод updateData и в него reloadData()
-    //делать гет сет для тейбл вью прям ну хуйня идея полная) хоть и рабочая но зачем нам тогда ваще мвп)
+    func updateData()
 }
 
 final class MeetingVC: UIViewController, MeetingVCProtocol {
@@ -44,11 +41,13 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
     
     //MARK: - Methods
     @objc private func addButtonPressed() {
-        let vc = ModuleBuilder.createCardOfDayVC(cardOfDay: CardOfDay(date: Date()), numberOfDay: 0, doWeChooseCard: false)
-        //kosyak либо не досмотрел видосы до конца либо поленился добавлять, но это должно быть в роутере все)
-        navigationController?.pushViewController(vc, animated: true)
+        presenter.addNewDay(numberOfDay: 0, doWeChooseCard: false)
     }
-
+    
+    func updateData() {
+        tableView.reloadData()
+    }
+    
     //MARK: - Configuration
     private func addSubviews() {
         view.addSubview(tableView)
@@ -109,7 +108,6 @@ extension MeetingVC: UITableViewDataSource {
         cell.detailTextLabel?.text = presenter.store.meetings[indexPath.row].date.dateToString() + " " + (presenter.store.meetings[indexPath.row].comment ?? "")
         cell.detailTextLabel?.textColor = .gray
         cell.accessoryType = .disclosureIndicator
-        
         return cell
     }
 }
@@ -119,25 +117,18 @@ extension MeetingVC: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let cardOfChosenDay = presenter.store.meetings[indexPath.row]
-        let vc = ModuleBuilder.createCardOfDayVC(cardOfDay: cardOfChosenDay,
-                                                 numberOfDay: indexPath.row,
-                                                 doWeChooseCard: true)
-        navigationController?.pushViewController(vc, animated: true)
+        presenter.chooseDayFromList(cardOfDay: cardOfChosenDay, numberOfDay: indexPath.row, doWeChooseCard: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let swipeRead = UIContextualAction(style: .normal, title: "Удалить") { [weak self] action, view, success in
             guard let self else { return }
             tableView.performBatchUpdates {
-                //kosyak Обращаться так конечно работает и прикольно но , правильнее было бы создать метод в презентере, который бы обращался у себя в стор и удалял день
-                //аналогично строчка 121 вот там уже можно создать геттер для стор митингов как вариант
-                self.presenter.store.removeDay(indexPath: indexPath)
+                self.presenter.removeDayFromStore(indexPath: indexPath)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }
-        
         swipeRead.backgroundColor = .red
-        
         return UISwipeActionsConfiguration(actions: [swipeRead])
     }
 }

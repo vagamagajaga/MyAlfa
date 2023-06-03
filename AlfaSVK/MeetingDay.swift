@@ -8,24 +8,27 @@
 import Foundation
 
 struct CardOfDay: Codable {
+    
+    //MARK: - Properties
     var date: Date
     var comment: String?
     var arrayOfProducts: [Product] = [
-    Product(name: "DC", count: 0, price: 250),
-    Product(name: "CC", count: 0, price: 380),
-    Product(name: "CC2", count: 0, price: 380),
-    Product(name: "CrossDC", count: 0, price: 300),
-    Product(name: "CrossCC", count: 0, price: 300),
-    Product(name: "ZPC", count: 0, price: 250),
-    Product(name: "MirPay", count: 0, price: 100),
-    Product(name: "RKO", count: 0, price: 380),
-    Product(name: "PIL", count: 0, price: 380),
-    Product(name: "CarLoan", count: 0, price: 380),
-    Product(name: "BC", count: 0, price: 600),
-    Product(name: "Селфи", count: 0, price: 300),
-    Product(name: "RE", count: 0, price: 250)
+        Product(name: "DC", count: 0, price: 250),
+        Product(name: "CC", count: 0, price: 380),
+        Product(name: "CC2", count: 0, price: 380),
+        Product(name: "CrossDC", count: 0, price: 300),
+        Product(name: "CrossCC", count: 0, price: 300),
+        Product(name: "ZPC", count: 0, price: 250),
+        Product(name: "MirPay", count: 0, price: 100),
+        Product(name: "RKO", count: 0, price: 380),
+        Product(name: "PIL", count: 0, price: 380),
+        Product(name: "CarLoan", count: 0, price: 380),
+        Product(name: "BC", count: 0, price: 600),
+        Product(name: "Селфи", count: 0, price: 300),
+        Product(name: "RE", count: 0, price: 250)
     ]
     
+    //MARK: - Methods
     func summaryOfDay() -> Int {
         var sum = 0
         for i in arrayOfProducts {
@@ -41,7 +44,6 @@ struct CardOfDay: Codable {
                 countOfCards += arrayOfProducts[i].count
             }
         }
-        
         return countOfCards
     }
 }

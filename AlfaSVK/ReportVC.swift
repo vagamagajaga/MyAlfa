@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ReportVCProtocol: AnyObject {
-    //что стоит сюда вписать?
+    //что стоит сюда вписать? может презентер?
 }
 
 final class ReportVC: UIViewController, ReportVCProtocol {
@@ -18,8 +18,6 @@ final class ReportVC: UIViewController, ReportVCProtocol {
     private var copyButton = UIButton()
     private var titleLabel = UILabel()
     
-    var cardOfDay = CardOfDay(date: Date()) //стоит ли оставлять здесь это свойство или правильно перенести в презентер?
-    //ответил в других косяках
     var presenter: ReportPresenterProtocol!
     
     private var copyButtonConstraint: NSLayoutConstraint!
@@ -43,6 +41,7 @@ final class ReportVC: UIViewController, ReportVCProtocol {
         
     }
     
+    //MARK: - Init
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -85,7 +84,7 @@ final class ReportVC: UIViewController, ReportVCProtocol {
         titleLabel.textColor = .label
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
-        textView.text = presenter.returnReportText(cardOfDay: cardOfDay)
+        textView.text = presenter.returnReportText(cardOfDay: presenter.cardOfDay)
         textView.backgroundColor = .systemBackground
         textView.layer.borderColor = UIColor.label.cgColor
         textView.sizeToFit()

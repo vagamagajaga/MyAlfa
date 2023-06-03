@@ -8,7 +8,6 @@
 import UIKit
 
 protocol CardOfDayVCProtocol: AnyObject {
-    var cardOfDay: CardOfDay { get set }
 }
 
 final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
@@ -28,28 +27,11 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
     private var areaField = UITextField()
     
     var presenter: CardOfDayPresenterProtocol!
-    //kosyak Это не похоже на юай а мохоже на модель, значит этому тут не место
-    lazy var cardOfDay: CardOfDay = CardOfDay(date: Date())
     
     private var addButtonBottomConstraint: NSLayoutConstraint!
     
     private var reusedCell = "reusedCell"
-    //kosyak и этому тут не место
-    private var doWeChooseCard: Bool = false
-    private var numberOfDay: Int = 0
-    
-    //MARK: - Lifecycle
-    //kosyak да и эти данные должен презентер передавать сюда
-    init(numberOfDay: Int = 0, doWeChooseCard: Bool = false) {
-        self.numberOfDay = numberOfDay
-        self.doWeChooseCard = doWeChooseCard
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +51,7 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
                                                object: nil)
     }
     
+    //MARK: - Init
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -89,19 +72,18 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
     }
     
     @objc private func addDay() {
-        cardOfDay.date = datePicker.date
-        doWeChooseCard ? presenter.store.meetings[numberOfDay] = cardOfDay : presenter.store.addDay(day: self.cardOfDay)
+        presenter.chosenDay.date = datePicker.date
+        presenter.doWeChooseCard ? presenter.store.meetings[presenter.numberOfDay] = presenter.chosenDay : presenter.store.addDay(day: presenter.chosenDay)
         navigationController?.popViewController(animated: true)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        cardOfDay.comment = textField.text
+        presenter.chosenDay.comment = textField.text
     }
     
     @objc private func moveToReport() {
-        cardOfDay.date = datePicker.date
-        let vc = ModuleBuilder.createReportVC(carDofDay: cardOfDay)
-        navigationController?.pushViewController(vc, animated: true)
+        presenter.chosenDay.date = datePicker.date
+        presenter.showReport()
     }
     
     //MARK: - Configuration
@@ -125,7 +107,7 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
         reportButton.translatesAutoresizingMaskIntoConstraints = false
         areaField.translatesAutoresizingMaskIntoConstraints = false
         
-        sumLabel.text = presenter.returnSum(cardOfDay: cardOfDay)
+        sumLabel.text = presenter.returnSum(cardOfDay: presenter.chosenDay)
         sumLabel.textAlignment = .center
         
         reportButton.backgroundColor = .systemBlue
@@ -135,19 +117,19 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
         reportButton.titleLabel?.textColor = .white
         reportButton.addTarget(self, action: #selector(moveToReport), for: .touchUpInside)
         
-        if let text = cardOfDay.comment {
+        if let text = presenter.chosenDay.comment {
             areaField.text = text
         } else {
             areaField.placeholder = "Укажи район"
         }
         
-        datePicker.date = cardOfDay.date
+        datePicker.date = presenter.chosenDay.date
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
         
         addButton.backgroundColor = .systemBlue
         addButton.layer.cornerRadius = 10
-        addButton.setTitle(doWeChooseCard ? "Изменить" : "Сохранить", for: .normal)
+        addButton.setTitle(presenter.doWeChooseCard ? "Изменить" : "Сохранить", for: .normal)
         addButton.isEnabled = true
         addButton.titleLabel?.textColor = .white
         addButton.addTarget(self, action: #selector(addDay), for: .touchUpInside)
@@ -190,14 +172,14 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
 //MARK: - Extensions
 extension CardOfDayVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cardOfDay.arrayOfProducts.count
+        presenter.chosenDay.arrayOfProducts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyTableViewCell", for: indexPath) as? MyTableViewCell else {
             return UITableViewCell()
         }
-        cell.configure(product: cardOfDay.arrayOfProducts[indexPath.row])
+        cell.configure(product: presenter.chosenDay.arrayOfProducts[indexPath.row])
         cell.delegate = self
     
         return cell
@@ -206,18 +188,17 @@ extension CardOfDayVC: UITableViewDataSource {
 
 extension CardOfDayVC: MyTableViewCellDelegate {
     func fillCardOfDay(product: CardOfDay.Product) {
-        let productIndex = cardOfDay.arrayOfProducts.firstIndex(where: { $0.name == product.name })
+        let productIndex = presenter.chosenDay.arrayOfProducts.firstIndex(where: { $0.name == product.name })
         if let index = productIndex {
-            cardOfDay.arrayOfProducts[index] = product
+            presenter.chosenDay.arrayOfProducts[index] = product
         }
         
-        //kosyak Вот тут более менее вызываешь правильно, но кард оф дей должен в презентере храниться
-        sumLabel.text = presenter.returnSum(cardOfDay: cardOfDay)
+        sumLabel.text = presenter.returnSum(cardOfDay: presenter.chosenDay)
     }
 }
 
 extension CardOfDayVC: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        cardOfDay.comment = textField.text
+        presenter.chosenDay.comment = textField.text
     }
 }

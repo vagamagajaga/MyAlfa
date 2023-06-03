@@ -7,11 +7,17 @@
 
 import UIKit
 
-final class StartVC: UIViewController {
+protocol StartVCProtocol: AnyObject {
+    
+}
+
+final class StartVC: UIViewController, StartVCProtocol {
     
     //MARK: - Properties
     private var label = UIImageView()
     private var startButton = UIButton()
+    
+    var presenter: StartPresenterProtocol!
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -20,7 +26,6 @@ final class StartVC: UIViewController {
         addSubviews()
         addConstraints()
         prepareSubviews()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -33,8 +38,7 @@ final class StartVC: UIViewController {
     
     //MARK: - Methods
     @objc private func buttonPressed() {
-        let vc = ModuleBuilder.createMeetingVC()
-        navigationController?.pushViewController(vc, animated: true)
+        presenter.tapOnGo()
     }
     
     //MARK: - Configuration
