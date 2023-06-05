@@ -35,7 +35,7 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //kosyak вообще запуск контроллера как правило начинается с обращения в презентер, оттуда ты можешь получить свои нужны инит данные для 42-43 строчки
+        
         addSubviews()
         prepareViews()
         addConstraints()

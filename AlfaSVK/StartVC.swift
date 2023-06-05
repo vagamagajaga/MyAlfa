@@ -49,8 +49,10 @@ final class StartVC: UIViewController, StartVCProtocol {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -140),
+            label.topAnchor.constraint(equalTo: view.topAnchor),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -80),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 80),
             
             startButton.heightAnchor.constraint(equalToConstant: 50),
             startButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
@@ -65,8 +67,8 @@ final class StartVC: UIViewController, StartVCProtocol {
         label.translatesAutoresizingMaskIntoConstraints = false
         startButton.translatesAutoresizingMaskIntoConstraints = false
         
-        label.image = UIImage(named: "Apict")
-        label.alpha = 0.0
+        label.image = UIImage(named: "Cherry_for_AlfaSVK")
+        label.alpha = 0.4
         
         startButton.layer.cornerRadius = 10
         startButton.setTitle("Go", for: .normal)
