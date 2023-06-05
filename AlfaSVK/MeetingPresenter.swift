@@ -14,6 +14,8 @@ protocol MeetingPresenterProtocol: AnyObject {
     func removeDayFromStore(indexPath: IndexPath)
     func addNewDay(numberOfDay: Int, doWeChooseCard: Bool)
     func chooseDayFromList(cardOfDay: CardOfDay, numberOfDay: Int, doWeChooseCard: Bool)
+    func summaryOfDayInString(indexPath: IndexPath) -> String
+    func detailOfDay(indexPath: IndexPath) -> String
 }
 
 final class MeetingPresenter: MeetingPresenterProtocol {
@@ -48,5 +50,13 @@ final class MeetingPresenter: MeetingPresenterProtocol {
     
     func chooseDayFromList(cardOfDay: CardOfDay, numberOfDay: Int, doWeChooseCard: Bool) {
         router.showChosenOrNewDay(cardOfDay: cardOfDay, numberOfDay: numberOfDay, doWeChooseCard: doWeChooseCard)
+    }
+    
+    func summaryOfDayInString(indexPath: IndexPath) -> String {
+        store.meetings[indexPath.row].summaryOfDay().intToStringWithSeparator()
+    }
+    
+    func detailOfDay(indexPath: IndexPath) -> String {
+        store.meetings[indexPath.row].date.dateToString() + " " + (store.meetings[indexPath.row].comment ?? "")
     }
 }

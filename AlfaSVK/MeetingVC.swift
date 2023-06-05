@@ -16,7 +16,7 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
     //MARK: - Properties
     private let reusedCell = "reusedCell"
 
-    var tableView = UITableView()
+    private var tableView = UITableView()
     private var addButton = UIButton()
     private var emptyTextLabel = UILabel()
     
@@ -104,8 +104,8 @@ extension MeetingVC: UITableViewDataSource {
             return UITableViewCell(style: .default, reuseIdentifier: reusedCell)
         }
         
-        cell.textLabel?.text = presenter.store.meetings[indexPath.row].summaryOfDay().intToStringWithSeparator()
-        cell.detailTextLabel?.text = presenter.store.meetings[indexPath.row].date.dateToString() + " " + (presenter.store.meetings[indexPath.row].comment ?? "")
+        cell.textLabel?.text = presenter.summaryOfDayInString(indexPath: indexPath)
+        cell.detailTextLabel?.text = presenter.detailOfDay(indexPath: indexPath)
         cell.detailTextLabel?.textColor = .gray
         cell.accessoryType = .disclosureIndicator
         return cell

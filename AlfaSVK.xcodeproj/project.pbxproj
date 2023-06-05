@@ -11,7 +11,7 @@
 		CC8F470A2A29D3BC003685AA /* CardOfDayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47092A29D3BC003685AA /* CardOfDayPresenter.swift */; };
 		CC8F47142A29D4DA003685AA /* MyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47132A29D4DA003685AA /* MyTableCell.swift */; };
 		CC8F47162A29D4FA003685AA /* ReportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47152A29D4FA003685AA /* ReportPresenter.swift */; };
-		CC8F47182A29D536003685AA /* Extensions+Int+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47172A29D536003685AA /* Extensions+Int+Date.swift */; };
+		CC8F47182A29D536003685AA /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47172A29D536003685AA /* Date+.swift */; };
 		CC8F471A2A29D55C003685AA /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47192A29D55C003685AA /* ReportVC.swift */; };
 		CC8F471C2A29D5B8003685AA /* CardOfDayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F471B2A29D5B8003685AA /* CardOfDayVC.swift */; };
 		CC8F471E2A29D608003685AA /* MeetingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F471D2A29D608003685AA /* MeetingVC.swift */; };
@@ -24,6 +24,7 @@
 		CC92DDB32A03D61E007ECEFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC92DDB12A03D61E007ECEFA /* LaunchScreen.storyboard */; };
 		CC92DDC12A03F379007ECEFA /* MeetingDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC02A03F379007ECEFA /* MeetingDay.swift */; };
 		CC92DDC32A040318007ECEFA /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC92DDC22A040318007ECEFA /* Store.swift */; };
+		CCA508B42A2DC1570066CEEF /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA508B32A2DC1570066CEEF /* Int+.swift */; };
 		CCC9F1992A247D2200BF8A22 /* AssemblyModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC9F1982A247D2200BF8A22 /* AssemblyModuleBuilder.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +33,7 @@
 		CC8F47092A29D3BC003685AA /* CardOfDayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardOfDayPresenter.swift; sourceTree = "<group>"; };
 		CC8F47132A29D4DA003685AA /* MyTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableCell.swift; sourceTree = "<group>"; };
 		CC8F47152A29D4FA003685AA /* ReportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPresenter.swift; sourceTree = "<group>"; };
-		CC8F47172A29D536003685AA /* Extensions+Int+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Int+Date.swift"; sourceTree = "<group>"; };
+		CC8F47172A29D536003685AA /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		CC8F47192A29D55C003685AA /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		CC8F471B2A29D5B8003685AA /* CardOfDayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardOfDayVC.swift; sourceTree = "<group>"; };
 		CC8F471D2A29D608003685AA /* MeetingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingVC.swift; sourceTree = "<group>"; };
@@ -47,6 +48,7 @@
 		CC92DDB42A03D61E007ECEFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC92DDC02A03F379007ECEFA /* MeetingDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDay.swift; sourceTree = "<group>"; };
 		CC92DDC22A040318007ECEFA /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		CCA508B32A2DC1570066CEEF /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		CCC9F1982A247D2200BF8A22 /* AssemblyModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyModuleBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,7 +209,7 @@
 				CC8F46FF2A29D2DA003685AA /* MeetingModule */,
 				CC8F47062A29D379003685AA /* CardOfDayModule */,
 				CC8F470D2A29D3FD003685AA /* ReportModule */,
-				CC8F47172A29D536003685AA /* Extensions+Int+Date.swift */,
+				CCA508B22A2DC11E0066CEEF /* Extensions */,
 				CC92DDB12A03D61E007ECEFA /* LaunchScreen.storyboard */,
 				CC92DDAF2A03D61E007ECEFA /* Assets.xcassets */,
 				CC92DDB42A03D61E007ECEFA /* Info.plist */,
@@ -221,6 +223,15 @@
 				CC92DDC22A040318007ECEFA /* Store.swift */,
 			);
 			name = StoreLayer;
+			sourceTree = "<group>";
+		};
+		CCA508B22A2DC11E0066CEEF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CC8F47172A29D536003685AA /* Date+.swift */,
+				CCA508B32A2DC1570066CEEF /* Int+.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,7 +307,7 @@
 				CC8F471C2A29D5B8003685AA /* CardOfDayVC.swift in Sources */,
 				CC8F471A2A29D55C003685AA /* ReportVC.swift in Sources */,
 				CC8F470A2A29D3BC003685AA /* CardOfDayPresenter.swift in Sources */,
-				CC8F47182A29D536003685AA /* Extensions+Int+Date.swift in Sources */,
+				CC8F47182A29D536003685AA /* Date+.swift in Sources */,
 				CC92DDC32A040318007ECEFA /* Store.swift in Sources */,
 				CC8F47242A2AFA37003685AA /* StartPresenter.swift in Sources */,
 				CC92DDAB2A03D61C007ECEFA /* StartVC.swift in Sources */,
@@ -305,6 +316,7 @@
 				CC92DDA72A03D61C007ECEFA /* AppDelegate.swift in Sources */,
 				CCC9F1992A247D2200BF8A22 /* AssemblyModuleBuilder.swift in Sources */,
 				CC8F47162A29D4FA003685AA /* ReportPresenter.swift in Sources */,
+				CCA508B42A2DC1570066CEEF /* Int+.swift in Sources */,
 				CC8F47022A29D316003685AA /* MeetingPresenter.swift in Sources */,
 				CC8F47142A29D4DA003685AA /* MyTableCell.swift in Sources */,
 				CC92DDA92A03D61C007ECEFA /* SceneDelegate.swift in Sources */,

@@ -7,9 +7,7 @@
 
 import UIKit
 
-protocol ReportVCProtocol: AnyObject {
-    //что стоит сюда вписать? может презентер?
-}
+protocol ReportVCProtocol: AnyObject { }
 
 final class ReportVC: UIViewController, ReportVCProtocol {
     
