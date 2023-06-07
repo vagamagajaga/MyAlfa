@@ -62,13 +62,13 @@ final class StartVC: UIViewController, StartVCProtocol {
     }
     
     private func prepareSubviews() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         label.translatesAutoresizingMaskIntoConstraints = false
         startButton.translatesAutoresizingMaskIntoConstraints = false
         
         label.image = UIImage(named: "Cherry_for_AlfaSVK")
-        label.alpha = 0.4
+        label.alpha = 0.1
         
         startButton.layer.cornerRadius = 10
         startButton.setTitle("Go", for: .normal)
