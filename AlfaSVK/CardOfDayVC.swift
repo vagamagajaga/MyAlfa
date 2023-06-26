@@ -49,6 +49,8 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+        
+        self.hideKeyboardWhenTappedAround()
     }
     
     //MARK: - Init

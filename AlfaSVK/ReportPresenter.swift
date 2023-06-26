@@ -47,21 +47,29 @@ final class ReportPresenter: ReportPresenterProtocol {
             Отчет за \(date)
             Район: \(cardOfDay.comment ?? "Не указан")
             
-            DC \(products[0].count)/0
+            DC \(products[0].count)/\(products[0].count)
             
-            СС \(products[1].count)/0
+            Акт: 0/\(products[0].count)
             
-            СС2 \(products[2].count)/0
+            СС \(products[1].count)/\(products[1].count)
             
-            ZPC \(products[5].count)/0
+            Страховка: \(products[1].count)/\(products[1].count)/\(products[1].count)/\(products[1].count)
             
-            RE \(checkForIndex(product: products, index: 12))/0
+            СС2 \(products[2].count)/\(products[2].count)
             
-            RKO \(products[7].count)/0
+            Транз: 0/\(products[1].count + products[2].count)
             
-            PIL \(products[8].count)/0
+            ZPC \(products[5].count)/\(products[5].count)
             
-            Автокредит \(products[9].count)/0
+            RE \(checkForIndex(product: products, index: 12))/\(checkForIndex(product: products, index: 12))
+            
+            RKO \(products[7].count)/\(products[7].count)
+            
+            PIL \(products[8].count)/\(products[8].count)
+            
+            Автокредит \(products[9].count)/\(products[9].count)
+            
+            T0 
             
             КРОССЫ
             
@@ -71,7 +79,7 @@ final class ReportPresenter: ReportPresenterProtocol {
             НС
             БС \(products[10].count)
             
-            MirPay \(cardOfDay.sumOfCards())/андроиды/\(products[6].count)
+            MirPay \(products[6].count)
             Селфи \(checkForIndex(product: products, index: 11))
             """
         

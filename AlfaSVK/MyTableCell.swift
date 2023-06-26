@@ -7,8 +7,6 @@
 
 import UIKit
 
-import UIKit
-
 protocol MyTableViewCellDelegate: AnyObject {
     func fillCardOfDay(product: CardOfDay.Product)
 }
