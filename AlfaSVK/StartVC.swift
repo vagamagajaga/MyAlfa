@@ -15,7 +15,7 @@ final class StartVC: UIViewController, StartVCProtocol {
     
     //MARK: - Properties
     private var label = UIImageView()
-    private var startButton = UIButton()
+    private var startButton = UIButton(type: .system)
     
     var presenter: StartPresenterProtocol!
     
@@ -71,9 +71,10 @@ final class StartVC: UIViewController, StartVCProtocol {
         label.alpha = 0.1
         
         startButton.layer.cornerRadius = 10
-        startButton.setTitle("Go", for: .normal)
         startButton.backgroundColor = .systemRed
-        startButton.titleLabel?.textColor = .white
+        startButton.setTitle("Go", for: .normal)
+        startButton.setTitleColor(.white, for: .normal)
+        startButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         startButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
 }

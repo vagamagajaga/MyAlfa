@@ -49,15 +49,13 @@ final class ReportPresenter: ReportPresenterProtocol {
             
             DC \(products[0].count)/\(products[0].count)
             
-            Акт: 0/\(products[0].count)
+            Акт: \(products[0].count)/\(products[0].count)
             
             СС \(products[1].count)/\(products[1].count)
-            
-            Страховка: \(products[1].count)/\(products[1].count)/\(products[1].count)/\(products[1].count)
-            
+                        
             СС2 \(products[2].count)/\(products[2].count)
             
-            Транз: 0/\(products[1].count + products[2].count)
+            Транз: \(products[1].count + products[2].count)/\(products[1].count + products[2].count)
             
             ZPC \(products[5].count)/\(products[5].count)
             
@@ -67,7 +65,7 @@ final class ReportPresenter: ReportPresenterProtocol {
             
             PIL \(products[8].count)/\(products[8].count)
             
-            Автокредит \(products[9].count)/\(products[9].count)
+            CL \(products[9].count)/\(products[9].count)
             
             T0 
             

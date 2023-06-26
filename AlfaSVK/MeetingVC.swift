@@ -63,7 +63,10 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            addButton.widthAnchor.constraint(equalToConstant: 30),
+            addButton.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     

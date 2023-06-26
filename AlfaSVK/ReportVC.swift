@@ -13,7 +13,7 @@ final class ReportVC: UIViewController, ReportVCProtocol {
     
     //MARK: - Property
     private var textView = UITextView()
-    private var copyButton = UIButton()
+    private var copyButton = UIButton(type: .system)
     private var titleLabel = UILabel()
     
     var presenter: ReportPresenterProtocol!
@@ -36,7 +36,6 @@ final class ReportVC: UIViewController, ReportVCProtocol {
                                                object: nil)
         
         self.hideKeyboardWhenTappedAround()
-        
     }
     
     //MARK: - Init
@@ -91,13 +90,13 @@ final class ReportVC: UIViewController, ReportVCProtocol {
         textView.layer.cornerRadius = 10
         textView.layer.borderWidth = 0.2
         
-        copyButton.setTitle("Cкопировать отчет", for: .normal)
         copyButton.backgroundColor = .systemBlue
         copyButton.layer.cornerRadius = 10
-        copyButton.isEnabled = true
-        copyButton.addTarget(self, action: #selector(copyText), for: .touchUpInside)
         copyButton.backgroundColor = .systemBlue
-        copyButton.titleLabel?.textColor = .label
+        copyButton.setTitleColor(.white, for: .normal)
+        copyButton.setTitle("Cкопировать отчет", for: .normal)
+        copyButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        copyButton.addTarget(self, action: #selector(copyText), for: .touchUpInside)
     }
     
     private func addConstraints() {
@@ -114,7 +113,7 @@ final class ReportVC: UIViewController, ReportVCProtocol {
             textView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             textView.bottomAnchor.constraint(equalTo: copyButton.topAnchor, constant: -20),
             
-            copyButton.heightAnchor.constraint(equalToConstant: 30),
+            copyButton.heightAnchor.constraint(equalToConstant: 40),
             copyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             copyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             copyButtonConstraint

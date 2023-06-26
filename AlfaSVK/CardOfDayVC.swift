@@ -20,11 +20,11 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
         return tableView
     }()
     
-    private var addButton = UIButton()
-    private var datePicker = UIDatePicker()
     private var sumLabel = UILabel()
-    private var reportButton = UIButton()
     private var areaField = UITextField()
+    private var datePicker = UIDatePicker()
+    private var addButton = UIButton(type: .system)
+    private var reportButton = UIButton(type: .system)
     
     var presenter: CardOfDayPresenterProtocol!
     
@@ -115,8 +115,8 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
         reportButton.backgroundColor = .systemBlue
         reportButton.layer.cornerRadius = 10
         reportButton.setTitle("Отчет", for: .normal)
-        reportButton.isEnabled = true
-        reportButton.titleLabel?.textColor = .white
+        reportButton.setTitleColor(.white, for: .normal)
+        reportButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         reportButton.addTarget(self, action: #selector(moveToReport), for: .touchUpInside)
         
         if let text = presenter.chosenDay.comment {
@@ -129,12 +129,12 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
         
-        addButton.backgroundColor = .systemBlue
         addButton.layer.cornerRadius = 10
-        addButton.setTitle(presenter.doWeChooseCard ? "Изменить" : "Сохранить", for: .normal)
-        addButton.isEnabled = true
-        addButton.titleLabel?.textColor = .white
+        addButton.backgroundColor = .systemBlue
+        addButton.setTitleColor(.white, for: .normal)
+        addButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         addButton.addTarget(self, action: #selector(addDay), for: .touchUpInside)
+        addButton.setTitle(presenter.doWeChooseCard ? "Изменить" : "Сохранить", for: .normal)
     }
     
     private func addConstraints() {
@@ -163,7 +163,7 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -20),
 
-            addButton.heightAnchor.constraint(equalToConstant: 30),
+            addButton.heightAnchor.constraint(equalToConstant: 40),
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             addButtonBottomConstraint

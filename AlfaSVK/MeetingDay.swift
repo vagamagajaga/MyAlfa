@@ -22,7 +22,7 @@ struct CardOfDay: Codable {
         Product(name: "MirPay", count: 0, price: 100),
         Product(name: "RKO", count: 0, price: 380),
         Product(name: "PIL", count: 0, price: 380),
-        Product(name: "CarLoan", count: 0, price: 380),
+        Product(name: "CL", count: 0, price: 380),
         Product(name: "BC", count: 0, price: 600),
         Product(name: "Селфи", count: 0, price: 300),
         Product(name: "RE", count: 0, price: 250)
