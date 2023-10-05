@@ -1,51 +1,51 @@
 //
-//  MeetingVCC.swift
+//  MonthsVC.swift
 //  AlfaSVK
 //
-//  Created by Vagan Galstian on 29.05.2023.
+//  Created by Vagan Galstian on 31.07.2023.
 //
 
 import UIKit
 import SnapKit
 
-protocol MeetingVCProtocol: AnyObject {
+protocol MonthsVCProtocol: AnyObject {
     func updateData()
 }
 
-final class MeetingVC: UIViewController, MeetingVCProtocol {
-    
+final class MonthsVC: UIViewController, MonthsVCProtocol {
+
     //MARK: - Properties
     private let reusedCell = "reusedCell"
 
     private var tableView = UITableView()
     private var addButton = UIButton()
     
-    var presenter: MeetingPresenterProtocol!
+    var presenter: MonthsPresenterProtocol!
+    
+    //MARK: - Private Constants
+    private enum UIConstants {
+        static let addButtonSize: CGFloat = 30
+    }
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.dataSource = self
         tableView.delegate = self
-        
+
         addSubviews()
         addConstraints()
         prepareSubviews()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        presenter.updateBooksByDate()
+    func updateData() {
+        
     }
     
     //MARK: - Methods
     @objc private func addButtonPressed() {
-        presenter.addNewDay(numberOfDay: 0, doWeChooseCard: false)
-    }
-    
-    func updateData() {
-        tableView.reloadData()
+        presenter.addNewMonth(numberOfMonth: 0, doWeChooseMonth: false)
     }
     
     //MARK: - Configuration
@@ -55,15 +55,12 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
     }
     
     private func addConstraints() {
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            addButton.widthAnchor.constraint(equalToConstant: 30),
-            addButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
+        tableView.snp.makeConstraints { make in
+            make.leading.bottom.trailing.top.equalToSuperview()
+        }
+        addButton.snp.makeConstraints { make in
+            make.height.width.equalTo(UIConstants.addButtonSize)
+        }
     }
     
     private func prepareSubviews() {
@@ -74,9 +71,6 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
         
         navigationItem.hidesBackButton = true
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        addButton.translatesAutoresizingMaskIntoConstraints = false
-        
         addButton.setImage(UIImage(systemName: "plus"), for: .normal)
         addButton.tintColor = .systemBlue
         addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
@@ -84,40 +78,27 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
 }
 
 //MARK: - Extensions
-extension MeetingVC: UITableViewDataSource {
+extension MonthsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.store.meetings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: reusedCell)
-        cell = UITableViewCell(style: .subtitle, reuseIdentifier: reusedCell)
-        
-        guard let cell = cell else {
-            return UITableViewCell(style: .default, reuseIdentifier: reusedCell)
-        }
-        
-        cell.textLabel?.text = presenter.summaryOfDayInString(indexPath: indexPath)
-        cell.detailTextLabel?.text = presenter.detailOfDay(indexPath: indexPath)
-        cell.detailTextLabel?.textColor = .gray
-        cell.accessoryType = .disclosureIndicator
+        let cell =  tableView.dequeueReusableCell(withIdentifier: reusedCell, for: indexPath)
         return cell
     }
 }
 
-extension MeetingVC: UITableViewDelegate {
+extension MonthsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         
-        let cardOfChosenDay = presenter.store.meetings[indexPath.row]
-        presenter.chooseDayFromList(cardOfDay: cardOfChosenDay, numberOfDay: indexPath.row, doWeChooseCard: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let swipeRead = UIContextualAction(style: .normal, title: "Удалить") { [weak self] action, view, success in
             guard let self else { return }
             tableView.performBatchUpdates {
-                self.presenter.removeDayFromStore(indexPath: indexPath)
+                self.presenter.removeMonthFromStore(indexPath: indexPath)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }

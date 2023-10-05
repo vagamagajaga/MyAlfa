@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC8E0DD42A77E31700720318 /* MonthsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E0DD32A77E31700720318 /* MonthsVC.swift */; };
+		CC8E0DD62A77E34400720318 /* MonthsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E0DD52A77E34400720318 /* MonthsPresenter.swift */; };
+		CC8E0DD92A77E3AC00720318 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC8E0DD82A77E3AC00720318 /* SnapKit */; };
 		CC8F47022A29D316003685AA /* MeetingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47012A29D316003685AA /* MeetingPresenter.swift */; };
 		CC8F470A2A29D3BC003685AA /* CardOfDayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47092A29D3BC003685AA /* CardOfDayPresenter.swift */; };
 		CC8F47142A29D4DA003685AA /* MyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8F47132A29D4DA003685AA /* MyTableCell.swift */; };
@@ -30,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC8E0DD32A77E31700720318 /* MonthsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthsVC.swift; sourceTree = "<group>"; };
+		CC8E0DD52A77E34400720318 /* MonthsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthsPresenter.swift; sourceTree = "<group>"; };
 		CC8F47012A29D316003685AA /* MeetingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingPresenter.swift; sourceTree = "<group>"; };
 		CC8F47092A29D3BC003685AA /* CardOfDayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardOfDayPresenter.swift; sourceTree = "<group>"; };
 		CC8F47132A29D4DA003685AA /* MyTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableCell.swift; sourceTree = "<group>"; };
@@ -59,12 +64,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC8E0DD92A77E3AC00720318 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CC8E0DD02A77E2C200720318 /* MonthsModule */ = {
+			isa = PBXGroup;
+			children = (
+				CC8E0DD12A77E2E100720318 /* View */,
+				CC8E0DD22A77E2F200720318 /* Presenter */,
+			);
+			name = MonthsModule;
+			sourceTree = "<group>";
+		};
+		CC8E0DD12A77E2E100720318 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CC8E0DD32A77E31700720318 /* MonthsVC.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CC8E0DD22A77E2F200720318 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				CC8E0DD52A77E34400720318 /* MonthsPresenter.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
 		CC8F46FD2A29D26D003685AA /* StoreModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +239,7 @@
 				CC8F46FD2A29D26D003685AA /* StoreModel */,
 				CC92DDBF2A03F311007ECEFA /* StoreLayer */,
 				CC8F46FE2A29D2C0003685AA /* StartModule */,
+				CC8E0DD02A77E2C200720318 /* MonthsModule */,
 				CC8F46FF2A29D2DA003685AA /* MeetingModule */,
 				CC8F47062A29D379003685AA /* CardOfDayModule */,
 				CC8F470D2A29D3FD003685AA /* ReportModule */,
@@ -253,6 +285,9 @@
 			dependencies = (
 			);
 			name = AlfaSVK;
+			packageProductDependencies = (
+				CC8E0DD82A77E3AC00720318 /* SnapKit */,
+			);
 			productName = AlfaSVK;
 			productReference = CC92DDA32A03D61C007ECEFA /* AlfaSVK.app */;
 			productType = "com.apple.product-type.application";
@@ -281,6 +316,9 @@
 				Base,
 			);
 			mainGroup = CC92DD9A2A03D61C007ECEFA;
+			packageReferences = (
+				CC8E0DD72A77E3AC00720318 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = CC92DDA42A03D61C007ECEFA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -312,9 +350,11 @@
 				CC8F470A2A29D3BC003685AA /* CardOfDayPresenter.swift in Sources */,
 				CC8F47182A29D536003685AA /* Date+.swift in Sources */,
 				CC92DDC32A040318007ECEFA /* Store.swift in Sources */,
+				CC8E0DD42A77E31700720318 /* MonthsVC.swift in Sources */,
 				CC8F47242A2AFA37003685AA /* StartPresenter.swift in Sources */,
 				CC92DDAB2A03D61C007ECEFA /* StartVC.swift in Sources */,
 				CC8F471E2A29D608003685AA /* MeetingVC.swift in Sources */,
+				CC8E0DD62A77E34400720318 /* MonthsPresenter.swift in Sources */,
 				CC8F47202A29E11E003685AA /* Router.swift in Sources */,
 				CC92DDA72A03D61C007ECEFA /* AppDelegate.swift in Sources */,
 				CCC9F1992A247D2200BF8A22 /* AssemblyModuleBuilder.swift in Sources */,
@@ -546,6 +586,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CC8E0DD72A77E3AC00720318 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CC8E0DD82A77E3AC00720318 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC8E0DD72A77E3AC00720318 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CC92DD9B2A03D61C007ECEFA /* Project object */;
 }

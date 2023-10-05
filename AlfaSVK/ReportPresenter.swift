@@ -48,24 +48,23 @@ final class ReportPresenter: ReportPresenterProtocol {
             Район: \(cardOfDay.comment ?? "Не указан")
             
             DC \(products[0].count)/\(products[0].count)
-            
             Акт: \(products[0].count)/\(products[0].count)
             
             СС \(products[1].count)/\(products[1].count)
-                        
+            Страх: \(products[1].count)/\(products[1].count)
+            
             СС2 \(products[2].count)/\(products[2].count)
             
             Транз: \(products[1].count + products[2].count)/\(products[1].count + products[2].count)
             
+            
             ZPC \(products[5].count)/\(products[5].count)
-            
             RE \(checkForIndex(product: products, index: 12))/\(checkForIndex(product: products, index: 12))
-            
             RKO \(products[7].count)/\(products[7].count)
-            
             PIL \(products[8].count)/\(products[8].count)
-            
             CL \(products[9].count)/\(products[9].count)
+            DOC \(checkForIndex(product: products, index: 13))/\(checkForIndex(product: products, index: 13))
+            Ипотека \(checkForIndex(product: products, index: 14))/\(checkForIndex(product: products, index: 14))
             
             T0 
             
@@ -77,7 +76,7 @@ final class ReportPresenter: ReportPresenterProtocol {
             НС
             БС \(products[10].count)
             
-            MirPay \(products[6].count)
+            ЦП \(products[6].count)
             Селфи \(checkForIndex(product: products, index: 11))
             """
         

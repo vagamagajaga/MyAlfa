@@ -1,26 +1,26 @@
 //
-//  MeetingVCC.swift
+//  WorkDaysOfMonthVC.swift
 //  AlfaSVK
 //
 //  Created by Vagan Galstian on 29.05.2023.
 //
 
 import UIKit
-import SnapKit
 
-protocol MeetingVCProtocol: AnyObject {
+protocol WorkDaysOfMonthVCProtocol: AnyObject {
     func updateData()
 }
 
-final class MeetingVC: UIViewController, MeetingVCProtocol {
+final class WorkDaysOfMonthVC: UIViewController, WorkDaysOfMonthVCProtocol {
     
     //MARK: - Properties
     private let reusedCell = "reusedCell"
 
     private var tableView = UITableView()
     private var addButton = UIButton()
+    private var saveButton = UIButton()
     
-    var presenter: MeetingPresenterProtocol!
+    var presenter: WorkDaysOfMonthPresenterProtocol!
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -42,6 +42,10 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
     //MARK: - Methods
     @objc private func addButtonPressed() {
         presenter.addNewDay(numberOfDay: 0, doWeChooseCard: false)
+    }
+    
+    @objc private func saveButtonPressed() {
+        presenter.
     }
     
     func updateData() {
@@ -76,15 +80,19 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
         
         addButton.setImage(UIImage(systemName: "plus"), for: .normal)
         addButton.tintColor = .systemBlue
         addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
+        
+        saveButton.tintColor = .systemBlue
+        saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
     }
 }
 
 //MARK: - Extensions
-extension MeetingVC: UITableViewDataSource {
+extension WorkDaysOfMonthVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return presenter.store.meetings.count
     }
@@ -105,7 +113,7 @@ extension MeetingVC: UITableViewDataSource {
     }
 }
 
-extension MeetingVC: UITableViewDelegate {
+extension WorkDaysOfMonthVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         

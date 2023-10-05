@@ -14,18 +14,20 @@ struct CardOfDay: Codable {
     var comment: String?
     var arrayOfProducts: [Product] = [
         Product(name: "DC", count: 0, price: 250),
-        Product(name: "CC", count: 0, price: 380),
-        Product(name: "CC2", count: 0, price: 380),
+        Product(name: "CC", count: 0, price: 470),
+        Product(name: "CC2", count: 0, price: 470),
         Product(name: "CrossDC", count: 0, price: 300),
-        Product(name: "CrossCC", count: 0, price: 300),
+        Product(name: "CrossCC", count: 0, price: 470),
         Product(name: "ZPC", count: 0, price: 250),
-        Product(name: "MirPay", count: 0, price: 100),
-        Product(name: "RKO", count: 0, price: 380),
-        Product(name: "PIL", count: 0, price: 380),
-        Product(name: "CL", count: 0, price: 380),
+        Product(name: "ЦП", count: 0, price: 100),
+        Product(name: "RKO", count: 0, price: 470),
+        Product(name: "PIL", count: 0, price: 470),
+        Product(name: "Автокредит", count: 0, price: 380),
         Product(name: "BC", count: 0, price: 600),
         Product(name: "Селфи", count: 0, price: 300),
-        Product(name: "RE", count: 0, price: 250)
+        Product(name: "RE", count: 0, price: 250),
+        Product(name: "DOC", count: 0, price: 175),
+        Product(name: "Ипотека", count: 0, price: 380)
     ]
     
     //MARK: - Methods
