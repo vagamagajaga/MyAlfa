@@ -232,8 +232,7 @@
 		CC92DDA52A03D61C007ECEFA /* AlfaSVK */ = {
 			isa = PBXGroup;
 			children = (
-				CC92DDA62A03D61C007ECEFA /* AppDelegate.swift */,
-				CC92DDA82A03D61C007ECEFA /* SceneDelegate.swift */,
+				CCE2E2B02ADD7C5B00F8C156 /* Application */,
 				CCC9F1982A247D2200BF8A22 /* AssemblyModuleBuilder.swift */,
 				CC8F471F2A29E11E003685AA /* Router.swift */,
 				CC8F46FD2A29D26D003685AA /* StoreModel */,
@@ -267,6 +266,15 @@
 				CCBC4BD02A36E4DF009E5577 /* UIViewController+.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		CCE2E2B02ADD7C5B00F8C156 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				CC92DDA62A03D61C007ECEFA /* AppDelegate.swift */,
+				CC92DDA82A03D61C007ECEFA /* SceneDelegate.swift */,
+			);
+			name = Application;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

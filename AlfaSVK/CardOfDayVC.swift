@@ -75,7 +75,7 @@ final class CardOfDayVC: UIViewController, CardOfDayVCProtocol {
     
     @objc private func addDay() {
         presenter.chosenDay.date = datePicker.date
-        presenter.doWeChooseCard ? presenter.store.meetings[presenter.numberOfDay] = presenter.chosenDay : presenter.store.addDay(day: presenter.chosenDay)
+        presenter.doWeChooseCard ? presenter.store.months[presenter.monthNumber].days[presenter.numberOfDay] = presenter.chosenDay : presenter.store.addDay(day: presenter.chosenDay, monthIndex: presenter.monthNumber)
         navigationController?.popViewController(animated: true)
     }
     

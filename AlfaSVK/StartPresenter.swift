@@ -26,6 +26,7 @@ final class StartPresenter: StartPresenterProtocol {
     
     //MARK: - Methods
     func tapOnGo() {
-        router?.showMeetingDays()
+        router?.showMonths()
+//        router?.showMeetingDays()
     }
 }

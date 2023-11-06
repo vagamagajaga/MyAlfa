@@ -18,4 +18,16 @@ extension Date {
         let date = dateFormatter.string(from: self)
         return date
     }
+    
+    func dateToMonth() -> String {
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US")
+            formatter.dateFormat = "MMMM yyyy"
+            return formatter
+        }()
+        
+        let date = dateFormatter.string(from: self)
+        return date
+    }
 }
