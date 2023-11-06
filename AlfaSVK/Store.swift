@@ -8,24 +8,25 @@
 import Foundation
 
 protocol StoreProtocol {
-    var meetings: [CardOfDay] { get set }
-    func removeDay(indexPath: IndexPath)
-    func addDay(day: CardOfDay)
+    var months: [MonthData] { get set }
+    func addDay(day: CardOfDay, monthIndex: Int)
+    func removeDay(indexPath: IndexPath, monthIndex: Int)
+    func addMonth()
 }
 
 final class Store: StoreProtocol {
     
     //MARK: - Properties
     private let defaults = UserDefaults.standard
-    private let key = "Meetings"
+    private let key = "Months"
     
-    var meetings: [CardOfDay] {
+    var months: [MonthData] {
         get {
             guard let data = defaults.data(forKey: key),
-                  let days = try? JSONDecoder().decode([CardOfDay].self, from: data) else {
+                  let storedMonths = try? JSONDecoder().decode([MonthData].self, from: data) else {
                 return []
             }
-            return days
+            return storedMonths
         }
         set {
             guard let data = try? JSONEncoder().encode(newValue) else {
@@ -36,11 +37,15 @@ final class Store: StoreProtocol {
     }
     
     //MARK: - Methods
-    func removeDay(indexPath: IndexPath) {
-        meetings.remove(at: indexPath.row)
+    func addMonth() {
+        months.append(MonthData(monthOfYear: Date(), days: []))
     }
     
-    func addDay(day: CardOfDay) {
-        meetings.append(day)
+    func addDay(day: CardOfDay, monthIndex: Int) {
+        months[monthIndex].days.append(day)
+    }
+    
+    func removeDay(indexPath: IndexPath, monthIndex: Int) {
+        months[monthIndex].days.remove(at: indexPath.row)
     }
 }

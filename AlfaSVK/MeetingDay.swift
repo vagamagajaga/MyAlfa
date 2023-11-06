@@ -27,7 +27,8 @@ struct CardOfDay: Codable {
         Product(name: "Селфи", count: 0, price: 300),
         Product(name: "RE", count: 0, price: 250),
         Product(name: "DOC", count: 0, price: 175),
-        Product(name: "Ипотека", count: 0, price: 380)
+        Product(name: "Ипотека", count: 0, price: 380),
+        Product(name: "Родитель+", count: 0, price: 550)
     ]
     
     //MARK: - Methods
@@ -50,10 +51,16 @@ struct CardOfDay: Codable {
     }
 }
 
+struct MonthData: Codable {
+    let monthOfYear: Date
+    var days: [CardOfDay]
+}
+
 extension CardOfDay {
     struct Product: Codable {
-        var name: String
+        var name: String //заменить стринг на тип енама
         var count: Int
         var price: Int
     }
 }
+

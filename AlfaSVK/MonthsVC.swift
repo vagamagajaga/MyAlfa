@@ -18,18 +18,14 @@ final class MonthsVC: UIViewController, MonthsVCProtocol {
     private let reusedCell = "reusedCell"
 
     private var tableView = UITableView()
-    private var addButton = UIButton()
     
     var presenter: MonthsPresenterProtocol!
-    
-    //MARK: - Private Constants
-    private enum UIConstants {
-        static let addButtonSize: CGFloat = 30
-    }
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter.createMonth()
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -39,70 +35,65 @@ final class MonthsVC: UIViewController, MonthsVCProtocol {
         prepareSubviews()
     }
     
-    func updateData() {
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateData()
     }
     
     //MARK: - Methods
-    @objc private func addButtonPressed() {
-        presenter.addNewMonth(numberOfMonth: 0, doWeChooseMonth: false)
+    func updateData() {
+        tableView.reloadData()
     }
     
     //MARK: - Configuration
     private func addSubviews() {
         view.addSubview(tableView)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
     }
     
     private func addConstraints() {
         tableView.snp.makeConstraints { make in
             make.leading.bottom.trailing.top.equalToSuperview()
         }
-        addButton.snp.makeConstraints { make in
-            make.height.width.equalTo(UIConstants.addButtonSize)
-        }
     }
     
     private func prepareSubviews() {
-        title = "Рабочие дни"
+        title = "Месяцы"
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.topItem?.largeTitleDisplayMode = .always
         
         navigationItem.hidesBackButton = true
         
-        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        addButton.tintColor = .systemBlue
-        addButton.addTarget(self, action: #selector(addButtonPressed), for: .touchUpInside)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
     }
 }
 
 //MARK: - Extensions
 extension MonthsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.store.meetings.count
+        return presenter.store.months.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =  tableView.dequeueReusableCell(withIdentifier: reusedCell, for: indexPath)
+        var cell = tableView.dequeueReusableCell(withIdentifier: reusedCell)
+        cell = UITableViewCell(style: .subtitle, reuseIdentifier: reusedCell)
+        
+        guard let cell = cell else {
+            return UITableViewCell(style: .default, reuseIdentifier: reusedCell)
+        }
+        cell.detailTextLabel?.text = presenter.detailOfMonth(indexPath: indexPath)
+        cell.textLabel?.text = presenter.summaryOfMonth(indexPath: indexPath)
+
+        cell.detailTextLabel?.textColor = .gray
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
 }
 
 extension MonthsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let swipeRead = UIContextualAction(style: .normal, title: "Удалить") { [weak self] action, view, success in
-            guard let self else { return }
-            tableView.performBatchUpdates {
-                self.presenter.removeMonthFromStore(indexPath: indexPath)
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
-        }
-        swipeRead.backgroundColor = .red
-        return UISwipeActionsConfiguration(actions: [swipeRead])
+        presenter.showChosenMonth(indexPath: indexPath.row)
     }
 }

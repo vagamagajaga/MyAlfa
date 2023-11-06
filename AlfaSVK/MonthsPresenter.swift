@@ -10,10 +10,10 @@ import Foundation
 protocol MonthsPresenterProtocol {
     var store: StoreProtocol { get }
     init(view: MonthsVCProtocol, store: StoreProtocol, router: RouterProtocol)
-    func updateMonthsByDate()
-    func removeMonthFromStore(indexPath: IndexPath)
-    func addNewMonth(numberOfMonth: Int, doWeChooseMonth: Bool)
-    func chooseMonthFromList(month: CardOfDay)
+    func createMonth()
+    func showChosenMonth(indexPath monthNumber: Int)
+    func detailOfMonth(indexPath: IndexPath) -> String
+    func summaryOfMonth(indexPath: IndexPath) -> String
 }
 
 class MonthsPresenter: MonthsPresenterProtocol {
@@ -31,23 +31,25 @@ class MonthsPresenter: MonthsPresenterProtocol {
     }
     
     //MARK: - Methods
-    func updateMonthsByDate() {
-        if store.meetings.count > 1 {
-            store.meetings.sort { $0.date < $1.date }
+    func createMonth() {
+        if store.months.isEmpty || store.months.last?.monthOfYear.dateToMonth() != Date().dateToMonth() {
+            store.addMonth()
         }
         view.updateData()
     }
     
-    func addNewMonth(numberOfMonth: Int, doWeChooseMonth: Bool) {
-        
+    func showChosenMonth(indexPath monthNumber: Int) {
+        router.showMonthMeetings(monthNumber: monthNumber)
     }
     
-    func removeMonthFromStore(indexPath: IndexPath) {
-        
+    func detailOfMonth(indexPath: IndexPath) -> String {
+        return store.months[indexPath.row].monthOfYear.dateToMonth()
     }
     
-    func chooseMonthFromList(month: CardOfDay) {
-        
+    func summaryOfMonth(indexPath: IndexPath) -> String {
+        var sum = 0
+        store.months[indexPath.row].days.forEach { sum += $0.summaryOfDay()
+        }
+        return String(sum)
     }
-    
 }

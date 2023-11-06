@@ -69,7 +69,7 @@ final class MyTableViewCell: UITableViewCell {
     //MARK: - Methods
     @objc private func stepperValueChanged(sender: UIStepper) {
         numberLabel.text = String(Int(sender.value))
-        product?.count = Int(sender.value)
+        product?.count = Int(sender.value) //заменить передачу продукта на число
         guard let product else { return }
         delegate?.fillCardOfDay(product: product)
     }

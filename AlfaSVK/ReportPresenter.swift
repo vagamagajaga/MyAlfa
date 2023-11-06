@@ -57,7 +57,6 @@ final class ReportPresenter: ReportPresenterProtocol {
             
             Транз: \(products[1].count + products[2].count)/\(products[1].count + products[2].count)
             
-            
             ZPC \(products[5].count)/\(products[5].count)
             RE \(checkForIndex(product: products, index: 12))/\(checkForIndex(product: products, index: 12))
             RKO \(products[7].count)/\(products[7].count)
@@ -65,6 +64,7 @@ final class ReportPresenter: ReportPresenterProtocol {
             CL \(products[9].count)/\(products[9].count)
             DOC \(checkForIndex(product: products, index: 13))/\(checkForIndex(product: products, index: 13))
             Ипотека \(checkForIndex(product: products, index: 14))/\(checkForIndex(product: products, index: 14))
+            Родитель \(checkForIndex(product: products, index: 15))/\(checkForIndex(product: products, index: 15))
             
             T0 
             
@@ -72,7 +72,6 @@ final class ReportPresenter: ReportPresenterProtocol {
             
             ДК \(products[3].count)
             КК \(products[0].count + products[5].count)/0/\(products[4].count)
-            
             НС
             БС \(products[10].count)
             
@@ -82,4 +81,48 @@ final class ReportPresenter: ReportPresenterProtocol {
         
         return text
     }
+  
+    //Фича
+//    private func someJoke() -> String {
+//        let url = URL(string: "https://v2.jokeapi.dev/joke/Dark")
+//        guard let url else {
+//            return "No joke" }
+//        let request = URLRequest(url: url)
+//        var joke = ""
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let error {
+//                return joke = error.localizedDescription
+//            }
+//            
+//            if let data, let structJoke = try? JSONDecoder().decode(Joke.self, from: data) {
+//                if structJoke.type == "twopart" {
+//                    print(structJoke.setup ?? "No joke")
+//                    print(structJoke.delivery ?? "No joke")
+//                    joke = (structJoke.setup ?? "No joke") + "\n" + (structJoke.delivery ?? "No joke")
+//                } else {
+//                    print(structJoke.joke ?? "No joke")
+//                    joke = structJoke.joke ?? "No joke"
+//                }
+//            }
+//        }
+//        task.resume()
+//        Thread.sleep(forTimeInterval: 1)
+//        return joke
+//    }
+//    
+//    // MARK: - Joke
+//    struct Joke: Codable {
+//        let error: Bool?
+//        let category, type, joke, setup, delivery: String?
+//        let flags: Flags?
+//        let id: Int?
+//        let safe: Bool?
+//        let lang: String?
+//    }
+//
+//    // MARK: - Flags
+//    struct Flags: Codable {
+//        let nsfw, religious, political, racist: Bool?
+//        let sexist, explicit: Bool?
+//    }
 }

@@ -14,8 +14,9 @@ protocol RouterMain {
 
 protocol RouterProtocol: RouterMain {
     func initialStartVC()
-    func showMeetingDays()
-    func showChosenOrNewDay(cardOfDay: CardOfDay, numberOfDay: Int, doWeChooseCard: Bool)
+    func showMonths()
+    func showMonthMeetings(monthNumber: Int)
+    func showChosenOrNewDay(cardOfDay: CardOfDay, monthNumber: Int, numberOfDay: Int, doWeChooseCard: Bool)
     func showReportOfDay(cardOfDay: CardOfDay)
 }
 
@@ -39,16 +40,24 @@ class Router: RouterProtocol {
         }
     }
     
-    func showMeetingDays() {
+    func showMonths() {
         if let navigationController = navigationController {
-            guard let meetingVC = assemblyBuilder?.createMeetingVC(router: self) else { return }
+            guard let meetingVC = assemblyBuilder?.createMonthsVC(router: self) else { return }
             navigationController.pushViewController(meetingVC, animated: true)
         }
     }
     
-    func showChosenOrNewDay(cardOfDay: CardOfDay, numberOfDay: Int, doWeChooseCard: Bool) {
+    func showMonthMeetings(monthNumber: Int) {
+        if let navigationController = navigationController {
+            guard let meetingVC = assemblyBuilder?.createMonthMeetingVC(router: self, monthNumber: monthNumber) else { return }
+            navigationController.pushViewController(meetingVC, animated: true)
+        }
+    }
+    
+    func showChosenOrNewDay(cardOfDay: CardOfDay, monthNumber: Int, numberOfDay: Int, doWeChooseCard: Bool) {
         if let navigationController = navigationController {
             guard let cardOfDayVC = assemblyBuilder?.createCardOfDayVC(chosenDay: cardOfDay,
+                                                                       monthNumber: monthNumber,
                                                                        numberOfDay: numberOfDay,
                                                                        doWeChooseCard: doWeChooseCard,
                                                                        router: self) else { return }

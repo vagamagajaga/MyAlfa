@@ -10,9 +10,10 @@ import Foundation
 protocol CardOfDayPresenterProtocol: AnyObject {
     var store: StoreProtocol { get set }
     var chosenDay: CardOfDay { get set }
-    var doWeChooseCard: Bool { get set }
-    var numberOfDay: Int { get set }
-    init(view: CardOfDayVCProtocol, store: StoreProtocol, chosenDay: CardOfDay, doWeChooseCard: Bool, numberOfDay: Int, router: RouterProtocol)
+    var doWeChooseCard: Bool { get }
+    var numberOfDay: Int { get }
+    var monthNumber: Int { get }
+    init(view: CardOfDayVCProtocol, store: StoreProtocol, chosenDay: CardOfDay, doWeChooseCard: Bool, monthNumber: Int, numberOfDay: Int, router: RouterProtocol)
     func returnSum(cardOfDay: CardOfDay) -> String
     func showReport()
 }
@@ -26,13 +27,15 @@ final class CardOfDayPresenter: CardOfDayPresenterProtocol {
     var router: RouterProtocol
     var doWeChooseCard: Bool = false
     var numberOfDay: Int = 0
+    var monthNumber: Int
     
     //MARK: - Init
-    required init(view: CardOfDayVCProtocol, store: StoreProtocol, chosenDay: CardOfDay, doWeChooseCard: Bool, numberOfDay: Int, router: RouterProtocol) {
+    required init(view: CardOfDayVCProtocol, store: StoreProtocol, chosenDay: CardOfDay, doWeChooseCard: Bool, monthNumber:Int, numberOfDay: Int, router: RouterProtocol) {
         self.view = view
         self.store = store
         self.chosenDay = chosenDay
         self.doWeChooseCard = doWeChooseCard
+        self.monthNumber = monthNumber
         self.numberOfDay = numberOfDay
         self.router = router
     }

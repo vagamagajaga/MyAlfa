@@ -36,12 +36,12 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.updateBooksByDate()
+        presenter.updateDaysByDate()
     }
     
     //MARK: - Methods
     @objc private func addButtonPressed() {
-        presenter.addNewDay(numberOfDay: 0, doWeChooseCard: false)
+        presenter.addNewDay( monthNumber: presenter.monthNumber, numberOfDay: 0, doWeChooseCard: false)
     }
     
     func updateData() {
@@ -71,9 +71,7 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.topItem?.largeTitleDisplayMode = .always
-        
-        navigationItem.hidesBackButton = true
-        
+                
         tableView.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -86,7 +84,7 @@ final class MeetingVC: UIViewController, MeetingVCProtocol {
 //MARK: - Extensions
 extension MeetingVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.store.meetings.count
+        return presenter.store.months[presenter.monthNumber].days.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,8 +107,8 @@ extension MeetingVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let cardOfChosenDay = presenter.store.meetings[indexPath.row]
-        presenter.chooseDayFromList(cardOfDay: cardOfChosenDay, numberOfDay: indexPath.row, doWeChooseCard: true)
+        let cardOfChosenDay = presenter.store.months[presenter.monthNumber].days[indexPath.row]
+        presenter.chooseDayFromList(cardOfDay: cardOfChosenDay,  monthNumber: presenter.monthNumber, numberOfDay: indexPath.row, doWeChooseCard: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
