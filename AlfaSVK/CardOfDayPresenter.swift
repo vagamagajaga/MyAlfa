@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MyPackage
 
 protocol CardOfDayPresenterProtocol: AnyObject {
     var store: StoreProtocol { get set }

@@ -71,6 +71,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04FCDCAE2B2063EE00113E1C /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				CCC9F1982A247D2200BF8A22 /* AssemblyModuleBuilder.swift */,
+				CC8F471F2A29E11E003685AA /* Router.swift */,
+			);
+			name = Routing;
+			sourceTree = "<group>";
+		};
 		CC8E0DD02A77E2C200720318 /* MonthsModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,8 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				CCE2E2B02ADD7C5B00F8C156 /* Application */,
-				CCC9F1982A247D2200BF8A22 /* AssemblyModuleBuilder.swift */,
-				CC8F471F2A29E11E003685AA /* Router.swift */,
+				04FCDCAE2B2063EE00113E1C /* Routing */,
 				CC8F46FD2A29D26D003685AA /* StoreModel */,
 				CC92DDBF2A03F311007ECEFA /* StoreLayer */,
 				CC8F46FE2A29D2C0003685AA /* StartModule */,

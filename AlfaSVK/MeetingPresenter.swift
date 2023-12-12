@@ -6,6 +6,7 @@
 //
 
 import Foundation
+//import MyPackage
 
 protocol MeetingPresenterProtocol: AnyObject {
     var monthNumber: Int { get }

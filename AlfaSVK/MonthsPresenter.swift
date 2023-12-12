@@ -16,7 +16,7 @@ protocol MonthsPresenterProtocol {
     func summaryOfMonth(indexPath: IndexPath) -> String
 }
 
-class MonthsPresenter: MonthsPresenterProtocol {
+final class MonthsPresenter: MonthsPresenterProtocol {
     
     //MARK: - Properties
     weak var view: MonthsVCProtocol!
@@ -50,6 +50,6 @@ class MonthsPresenter: MonthsPresenterProtocol {
         var sum = 0
         store.months[indexPath.row].days.forEach { sum += $0.summaryOfDay()
         }
-        return String(sum)
+        return sum.intToStringWithSeparator()
     }
 }
